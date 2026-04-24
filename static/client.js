@@ -1,3 +1,5 @@
+import * as THREE from "./vendor/three.module.min.js";
+
 const canvas = document.getElementById("client-canvas");
 const statusEl = document.getElementById("client-status");
 const titleEl = document.getElementById("client-game-title");
@@ -14,11 +16,6 @@ const creator = params.get("creator") || "Unknown Creator";
 titleEl.textContent = gameName;
 subEl.textContent = `Creator - ${creator}`;
 statusEl.textContent = "Loading world geometry...";
-
-if (!window.THREE) {
-  statusEl.textContent = "Three.js failed to load - check internet access and refresh.";
-  throw new Error("Three.js not available on window.THREE");
-}
 
 const lobbyUsers = [
   { name: "You", role: "Player" },
