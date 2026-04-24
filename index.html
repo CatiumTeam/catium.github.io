@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div id="top-bar">
+    <span>Welcome to ROBLOX! &nbsp;|&nbsp; <a href="#">Sign Up</a> &nbsp;|&nbsp; <a href="#">Log In</a></span>
+  </div>
+
+  <!-- HEADER -->
+  <header id="main-header">
+    <div id="header-inner">
+      <a href="#" id="logo">
+        <img src="https://i.imgur.com/Qj9QVqF.png" alt="ROBLOX" onerror="this.style.display='none'; document.getElementById('logo-text').style.display='block';" />
+        <span id="logo-text">ROBLOX</span>
+      </a>
+      <nav id="main-nav">
+        <a href="#" class="nav-link active">Games</a>
+        <a href="#" class="nav-link">Catalog</a>
+        <a href="#" class="nav-link">Trade</a>
+        <a href="#" class="nav-link">Forums</a>
+        <a href="#" class="nav-link">Blog</a>
+        <a href="#" class="nav-link">More &darr;</a>
+      </nav>
+      <div id="header-right">
+        <div id="search-bar">
+          <input type="text" placeholder="Search" />
+          <button>&#128269;</button>
+        </div>
+        <div id="user-info">
+          <img src="https://www.roblox.com/headshot-thumbnail/image?userId=1&width=48&height=48&format=png" alt="Avatar" id="avatar-img" onerror="this.src='avatar_placeholder.png'" />
+          <span id="username">Builderman</span>
+          <span id="robux">&#x1F4B0; 0 R$</span>
+          <span id="tickets">&#127914; 0 TIX</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- SIDE NAV + CONTENT -->
+  <div id="page-wrapper">
+
+    <!-- LEFT SIDEBAR -->
+    <aside id="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-header">My Stuff</div>
+        <ul>
+          <li><a href="#">Profile</a></li>
+          <li><a href="#">Avatar</a></li>
+          <li><a href="#">Friends</a></li>
+          <li><a href="#">Messages <span class="badge">3</span></a></li>
+          <li><a href="#">My Places</a></li>
+          <li><a href="#">My Models</a></li>
+          <li><a href="#">My Decals</a></li>
+          <li><a href="#">My Gear</a></li>
+          <li><a href="#">My Hats</a></li>
+        </ul>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-header">Money</div>
+        <ul>
+          <li><a href="#">Buy Robux</a></li>
+          <li><a href="#">Buy Tickets</a></li>
+          <li><a href="#">Trade Currency</a></li>
+          <li><a href="#">My Transactions</a></li>
+        </ul>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-header">Official</div>
+        <ul>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Forums</a></li>
+          <li><a href="#">ROBLOX Wiki</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main id="main-content">
+
+      <!-- FEATURED BANNER -->
+      <div id="featured-banner">
+        <div id="featured-image">
+          <div id="featured-overlay">
+            <div id="featured-title">Featured: Sword Fighting Tournament</div>
+            <div id="featured-sub">by ROBLOX &nbsp;|&nbsp; &#9733;&#9733;&#9733;&#9733;&#9733; &nbsp;|&nbsp; 1,204,532 plays</div>
+            <button class="play-btn">Play</button>
+          </div>
+        </div>
+        <div id="featured-tabs">
+          <button class="ftab active" onclick="switchFeatured(0)">1</button>
+          <button class="ftab" onclick="switchFeatured(1)">2</button>
+          <button class="ftab" onclick="switchFeatured(2)">3</button>
+          <button class="ftab" onclick="switchFeatured(3)">4</button>
+          <button class="ftab" onclick="switchFeatured(4)">5</button>
+        </div>
+      </div>
+
+      <!-- POPULAR GAMES -->
+      <section class="content-section">
+        <div class="section-header">
+          <h2>Popular Games</h2>
+          <a href="#" class="see-all">See All &raquo;</a>
+        </div>
+        <div class="game-grid" id="popular-games"></div>
+      </section>
+
+      <!-- TOP RATED -->
+      <section class="content-section">
+        <div class="section-header">
+          <h2>Top Rated</h2>
+          <a href="#" class="see-all">See All &raquo;</a>
+        </div>
+        <div class="game-grid" id="top-rated"></div>
+      </section>
+
+      <!-- NEW & UPDATED -->
+      <section class="content-section">
+        <div class="section-header">
+          <h2>New &amp; Updated</h2>
+          <a href="#" class="see-all">See All &raquo;</a>
+        </div>
+        <div class="game-grid" id="new-games"></div>
+      </section>
+
+    </main>
+
+    <!-- RIGHT SIDEBAR -->
+    <aside id="right-sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-header">Builders Club</div>
+        <div id="bc-promo">
+          <div class="bc-tier bc-classic">Classic BC</div>
+          <div class="bc-tier bc-turbo">Turbo BC</div>
+          <div class="bc-tier bc-outrageous">Outrageous BC</div>
+          <button class="upgrade-btn">Upgrade Now!</button>
+        </div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-header">Active Friends</div>
+        <ul id="friends-list">
+          <li><span class="friend-dot online"></span> <a href="#">Builderman</a></li>
+          <li><span class="friend-dot online"></span> <a href="#">Stickmasterluke</a></li>
+          <li><span class="friend-dot online"></span> <a href="#">Merely</a></li>
+          <li><span class="friend-dot offline"></span> <a href="#">1x1x1x1</a></li>
+          <li><span class="friend-dot offline"></span> <a href="#">Telamon</a></li>
+        </ul>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-header">Latest Blog Post</div>
+        <div class="blog-post">
+          <a href="#">ROBLOX Summer Tournament 2013 - Win Prizes!</a>
+          <p>Posted on April 20, 2013 by ROBLOX</p>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer id="main-footer">
+    <div id="footer-inner">
+      <div class="footer-col">
+        <strong>ROBLOX</strong>
+        <a href="#">About Us</a>
+        <a href="#">Careers</a>
+        <a href="#">Press</a>
+        <a href="#">Blog</a>
+      </div>
+      <div class="footer-col">
+        <strong>Community</strong>
+        <a href="#">Forums</a>
+        <a href="#">Wiki</a>
+        <a href="#">Fan Sites</a>
+        <a href="#">Merchandise</a>
+      </div>
+      <div class="footer-col">
+        <strong>Help</strong>
+        <a href="#">FAQ</a>
+        <a href="#">Contact Us</a>
+        <a href="#">Parents Guide</a>
+        <a href="#">Safety</a>
+      </div>
+      <div class="footer-col">
+        <strong>Legal</strong>
+        <a href="#">Terms of Service</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Cookie Policy</a>
+      </div>
+    </div>
+    <div id="footer-bottom">&copy; 2013 ROBLOX Corporation. All Rights Reserved.</div>
+  </footer>
+
+  <!-- MODAL: Login -->
+  <div id="modal-overlay" class="hidden">
+    <div id="login-modal">
+      <div id="modal-header">
+        <span>Log In to ROBLOX</span>
+        <button id="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div id="modal-body">
+        <label>Username</label>
+        <input type="text" placeholder="Username" />
+        <label>Password</label>
+        <input type="password" placeholder="Password" />
+        <label><input type="checkbox" /> Remember me</label>
+        <button class="login-submit-btn">Log In</button>
+        <div class="modal-links">
+          <a href="#">Forgot Password?</a> &nbsp;|&nbsp; <a href="#">Sign Up</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
