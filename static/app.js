@@ -1,18 +1,18 @@
 
 // ===== GAME DATA =====
 const GAMES = [
-	{ id:1,  name:"Natural Disaster Survival", creator:"Stickmasterluke", plays:"1.2B", stars:4.8, color:"#7c3aed", emoji:"🌋", live:true,  desc:"Survive earthquakes, floods, and more with up to 30 players." },
-	{ id:2,  name:"Work at a Pizza Place",     creator:"Dued1",           plays:"893M", stars:4.7, color:"#dc2626", emoji:"🍕", live:true,  desc:"The classic pizza roleplay game. Deliver, cook, manage." },
-	{ id:3,  name:"Sword Fighting Tournament", creator:"Catium",          plays:"654M", stars:4.6, color:"#2563eb", emoji:"⚔️", live:false, desc:"Enter the arena and battle for glory in this competitive PvP game." },
-	{ id:4,  name:"Escape Room",               creator:"Builderman",      plays:"432M", stars:4.5, color:"#059669", emoji:"🔐", live:false, desc:"Solve puzzles and escape devious rooms in this mind-bending challenge." },
-	{ id:5,  name:"Murder Mystery 2",          creator:"Nikilis",         plays:"920M", stars:4.9, color:"#be123c", emoji:"🔪", live:true,  desc:"Who is the murderer? Deduce, survive, or eliminate in this thriller." },
-	{ id:6,  name:"Lumber Tycoon 2",           creator:"Defaultio",       plays:"182M", stars:4.8, color:"#92400e", emoji:"🪵", live:false, desc:"Chop wood, build trucks, and grow your lumber empire." },
-	{ id:7,  name:"Apocalypse Rising",         creator:"Gusmanak",        plays:"1B",   stars:4.9, color:"#4d4d00", emoji:"☢️", live:true,  desc:"Survival in a post-apocalyptic open world filled with zombies." },
-	{ id:8,  name:"Theme Park Tycoon 2",       creator:"Den_S",           plays:"246M", stars:4.8, color:"#0369a1", emoji:"🎡", live:false, desc:"Design and build your dream amusement park from scratch." },
-	{ id:9,  name:"Phantom Forces",            creator:"StyLiS Studios",  plays:"500M", stars:4.7, color:"#1f2937", emoji:"🔫", live:true,  desc:"A realistic first-person shooter with ranked matchmaking." },
-	{ id:10, name:"Vehicle Simulator",         creator:"Simbuilder",      plays:"161M", stars:4.6, color:"#b45309", emoji:"🚗", live:false, desc:"Race, drift, and explore in dozens of realistic vehicles." },
-	{ id:11, name:"Flood Escape 2",            creator:"Crazyblox",       plays:"276M", stars:4.6, color:"#0284c7", emoji:"🌊", live:true,  desc:"Escape rising floodwaters in increasingly difficult maps." },
-	{ id:12, name:"Dragon Ball Z Final Stand",  creator:"Digital G",      plays:"143M", stars:4.5, color:"#d97706", emoji:"⚡", live:false, desc:"Train your fighter and battle in this epic DBZ fan experience." },
+	{ id:1,  name:"Natural Disaster Survival", creator:"ChatGPT",         plays:"1.2B", stars:4.8, color:"#7c3aed", emoji:"🌋", live:true,  desc:"Survive earthquakes, floods, and more with up to 30 players." },
+	{ id:2,  name:"Work at a Pizza Place",     creator:"Claude",          plays:"893M", stars:4.7, color:"#dc2626", emoji:"🍕", live:true,  desc:"The classic pizza roleplay game. Deliver, cook, manage." },
+	{ id:3,  name:"Sword Fighting Tournament", creator:"Grok",            plays:"654M", stars:4.6, color:"#2563eb", emoji:"⚔️", live:false, desc:"Enter the arena and battle for glory in this competitive PvP game." },
+	{ id:4,  name:"Escape Room",               creator:"Gemini",          plays:"432M", stars:4.5, color:"#059669", emoji:"🔐", live:false, desc:"Solve puzzles and escape devious rooms in this mind-bending challenge." },
+	{ id:5,  name:"Murder Mystery 2",          creator:"GitHub Copilot",  plays:"920M", stars:4.9, color:"#be123c", emoji:"🔪", live:true,  desc:"Who is the murderer? Deduce, survive, or eliminate in this thriller." },
+	{ id:6,  name:"Lumber Tycoon 2",           creator:"Perplexity",      plays:"182M", stars:4.8, color:"#92400e", emoji:"🪵", live:false, desc:"Chop wood, build trucks, and grow your lumber empire." },
+	{ id:7,  name:"Apocalypse Rising",         creator:"Mistral",         plays:"1B",   stars:4.9, color:"#4d4d00", emoji:"☢️", live:true,  desc:"Survival in a post-apocalyptic open world filled with zombies." },
+	{ id:8,  name:"Theme Park Tycoon 2",       creator:"Llama",           plays:"246M", stars:4.8, color:"#0369a1", emoji:"🎡", live:false, desc:"Design and build your dream amusement park from scratch." },
+	{ id:9,  name:"Phantom Forces",            creator:"DeepSeek",        plays:"500M", stars:4.7, color:"#1f2937", emoji:"🔫", live:true,  desc:"A realistic first-person shooter with ranked matchmaking." },
+	{ id:10, name:"Vehicle Simulator",         creator:"Qwen",            plays:"161M", stars:4.6, color:"#b45309", emoji:"🚗", live:false, desc:"Race, drift, and explore in dozens of realistic vehicles." },
+	{ id:11, name:"Flood Escape 2",            creator:"Command R",       plays:"276M", stars:4.6, color:"#0284c7", emoji:"🌊", live:true,  desc:"Escape rising floodwaters in increasingly difficult maps." },
+	{ id:12, name:"Dragon Ball Z Final Stand",  creator:"Pi",            plays:"143M", stars:4.5, color:"#d97706", emoji:"⚡", live:false, desc:"Train your fighter and battle in this epic DBZ fan experience." },
 ];
 
 const TOP_RATED = GAMES.slice().sort((a,b) => b.stars - a.stars);
@@ -55,10 +55,22 @@ const STUDIOS = [
 ];
 
 const CREATORS = [
-	{ name: "Stickmasterluke - 🌟", stat: "2.1B total plays" },
-	{ name: "Nikilis - 🔥", stat: "1.4B total plays" },
-	{ name: "Dued1 - 🍕", stat: "920M total plays" },
-	{ name: "Den_S - 🎡", stat: "620M total plays" },
+	{ name: "ChatGPT - 🌟", stat: "2.1B total plays" },
+	{ name: "Claude - 🔥", stat: "1.9B total plays" },
+	{ name: "Grok - ⚡", stat: "1.5B total plays" },
+	{ name: "Gemini - 💠", stat: "1.3B total plays" },
+	{ name: "GitHub Copilot - 🧠", stat: "1.2B total plays" },
+	{ name: "Perplexity - 🔎", stat: "980M total plays" },
+	{ name: "Mistral - 🌬️", stat: "910M total plays" },
+	{ name: "Llama - 🦙", stat: "860M total plays" },
+	{ name: "DeepSeek - 🛰️", stat: "790M total plays" },
+	{ name: "Qwen - 🧩", stat: "740M total plays" },
+	{ name: "Command R - 📡", stat: "700M total plays" },
+	{ name: "Pi - 🤝", stat: "660M total plays" },
+	{ name: "YouChat - 💬", stat: "610M total plays" },
+	{ name: "Jasper - ✍️", stat: "540M total plays" },
+	{ name: "Character.AI - 🎭", stat: "520M total plays" },
+	{ name: "Phind - 🛠️", stat: "500M total plays" },
 ];
 
 // ===== HERO =====

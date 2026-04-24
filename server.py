@@ -6,19 +6,38 @@ from flask import Flask, jsonify, render_template, request
 app = Flask(__name__)
 DB_PATH = Path(__file__).with_name("catium.db")
 
+AI_CREATORS = [
+    "ChatGPT",
+    "Claude",
+    "Grok",
+    "Gemini",
+    "GitHub Copilot",
+    "Perplexity",
+    "Mistral",
+    "Llama",
+    "DeepSeek",
+    "Qwen",
+    "Command R",
+    "Pi",
+    "YouChat",
+    "Jasper",
+    "Character.AI",
+    "Phind",
+]
+
 SEED_GAMES = [
-    ("Natural Disaster Survival", "Stickmasterluke", 1200000000, 4.8, "#7c3aed", "🌋", 1, "Survive earthquakes, floods, and more with up to 30 players."),
-    ("Work at a Pizza Place", "Dued1", 893000000, 4.7, "#dc2626", "🍕", 1, "The classic pizza roleplay game. Deliver, cook, manage."),
-    ("Sword Fighting Tournament", "Catium", 654000000, 4.6, "#2563eb", "⚔️", 0, "Enter the arena and battle for glory in this competitive PvP game."),
-    ("Escape Room", "Builderman", 432000000, 4.5, "#059669", "🔐", 0, "Solve puzzles and escape devious rooms in this mind-bending challenge."),
-    ("Murder Mystery 2", "Nikilis", 920000000, 4.9, "#be123c", "🔪", 1, "Who is the murderer? Deduce, survive, or eliminate in this thriller."),
-    ("Lumber Tycoon 2", "Defaultio", 182000000, 4.8, "#92400e", "🪵", 0, "Chop wood, build trucks, and grow your lumber empire."),
-    ("Apocalypse Rising", "Gusmanak", 1000000000, 4.9, "#4d4d00", "☢️", 1, "Survival in a post-apocalyptic open world filled with zombies."),
-    ("Theme Park Tycoon 2", "Den_S", 246000000, 4.8, "#0369a1", "🎡", 0, "Design and build your dream amusement park from scratch."),
-    ("Phantom Forces", "StyLiS Studios", 500000000, 4.7, "#1f2937", "🔫", 1, "A realistic first-person shooter with ranked matchmaking."),
-    ("Vehicle Simulator", "Simbuilder", 161000000, 4.6, "#b45309", "🚗", 0, "Race, drift, and explore in dozens of realistic vehicles."),
-    ("Flood Escape 2", "Crazyblox", 276000000, 4.6, "#0284c7", "🌊", 1, "Escape rising floodwaters in increasingly difficult maps."),
-    ("Dragon Ball Z Final Stand", "Digital G", 143000000, 4.5, "#d97706", "⚡", 0, "Train your fighter and battle in this epic DBZ fan experience."),
+    ("Natural Disaster Survival", "ChatGPT", 1200000000, 4.8, "#7c3aed", "🌋", 1, "Survive earthquakes, floods, and more with up to 30 players."),
+    ("Work at a Pizza Place", "Claude", 893000000, 4.7, "#dc2626", "🍕", 1, "The classic pizza roleplay game. Deliver, cook, manage."),
+    ("Sword Fighting Tournament", "Grok", 654000000, 4.6, "#2563eb", "⚔️", 0, "Enter the arena and battle for glory in this competitive PvP game."),
+    ("Escape Room", "Gemini", 432000000, 4.5, "#059669", "🔐", 0, "Solve puzzles and escape devious rooms in this mind-bending challenge."),
+    ("Murder Mystery 2", "GitHub Copilot", 920000000, 4.9, "#be123c", "🔪", 1, "Who is the murderer? Deduce, survive, or eliminate in this thriller."),
+    ("Lumber Tycoon 2", "Perplexity", 182000000, 4.8, "#92400e", "🪵", 0, "Chop wood, build trucks, and grow your lumber empire."),
+    ("Apocalypse Rising", "Mistral", 1000000000, 4.9, "#4d4d00", "☢️", 1, "Survival in a post-apocalyptic open world filled with zombies."),
+    ("Theme Park Tycoon 2", "Llama", 246000000, 4.8, "#0369a1", "🎡", 0, "Design and build your dream amusement park from scratch."),
+    ("Phantom Forces", "DeepSeek", 500000000, 4.7, "#1f2937", "🔫", 1, "A realistic first-person shooter with ranked matchmaking."),
+    ("Vehicle Simulator", "Qwen", 161000000, 4.6, "#b45309", "🚗", 0, "Race, drift, and explore in dozens of realistic vehicles."),
+    ("Flood Escape 2", "Command R", 276000000, 4.6, "#0284c7", "🌊", 1, "Escape rising floodwaters in increasingly difficult maps."),
+    ("Dragon Ball Z Final Stand", "Pi", 143000000, 4.5, "#d97706", "⚡", 0, "Train your fighter and battle in this epic DBZ fan experience."),
 ]
 
 
@@ -66,6 +85,15 @@ def fetch_games(limit=12, sort_by="plays"):
             (limit,),
         ).fetchall()
     return [dict(row) for row in rows]
+
+
+def apply_ai_creator_credits():
+    with get_db_connection() as conn:
+        rows = conn.execute("SELECT id FROM games ORDER BY id ASC").fetchall()
+        for idx, row in enumerate(rows):
+            creator = AI_CREATORS[idx % len(AI_CREATORS)]
+            conn.execute("UPDATE games SET creator = ? WHERE id = ?", (creator, row["id"]))
+        conn.commit()
 
 users_db = [
     {"id": 1, "username": "Builderman",     "online": True},
@@ -160,6 +188,7 @@ def api_stats():
 
 
 init_db()
+apply_ai_creator_credits()
 
 
 if __name__ == "__main__":
