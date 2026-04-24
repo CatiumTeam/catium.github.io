@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Roblox</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Catium</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 </head>
 <body>
 
   <!-- TOP BAR -->
   <div id="top-bar">
-    <span>Welcome to ROBLOX! &nbsp;|&nbsp; <a href="#">Sign Up</a> &nbsp;|&nbsp; <a href="#">Log In</a></span>
+    <span>Welcome to Catium! &nbsp;|&nbsp; <a href="#">Sign Up</a> &nbsp;|&nbsp; <a href="#">Log In</a></span>
   </div>
 
   <!-- HEADER -->
   <header id="main-header">
     <div id="header-inner">
       <a href="#" id="logo">
-        <img src="https://i.imgur.com/Qj9QVqF.png" alt="ROBLOX" onerror="this.style.display='none'; document.getElementById('logo-text').style.display='block';" />
-        <span id="logo-text">ROBLOX</span>
+        <img src="https://i.imgur.com/Qj9QVqF.png" alt="Catium" onerror="this.style.display='none'; document.getElementById('logo-text').style.display='block';" />
+        <span id="logo-text">Catium</span>
       </a>
       <nav id="main-nav">
         <a href="#" class="nav-link active">Games</a>
@@ -36,7 +36,7 @@
         <div id="user-info">
           <img src="https://www.roblox.com/headshot-thumbnail/image?userId=1&width=48&height=48&format=png" alt="Avatar" id="avatar-img" onerror="this.src='avatar_placeholder.png'" />
           <span id="username">Builderman</span>
-          <span id="robux">&#x1F4B0; 0 R$</span>
+          <span id="robux">&#x1F4B0; 0 CAT</span>
           <span id="tickets">&#127914; 0 TIX</span>
         </div>
       </div>
@@ -76,7 +76,7 @@
         <ul>
           <li><a href="#">Blog</a></li>
           <li><a href="#">Forums</a></li>
-          <li><a href="#">ROBLOX Wiki</a></li>
+          <li><a href="#">Catium Wiki</a></li>
         </ul>
       </div>
     </aside>
@@ -89,7 +89,7 @@
         <div id="featured-image">
           <div id="featured-overlay">
             <div id="featured-title">Featured: Sword Fighting Tournament</div>
-            <div id="featured-sub">by ROBLOX &nbsp;|&nbsp; &#9733;&#9733;&#9733;&#9733;&#9733; &nbsp;|&nbsp; 1,204,532 plays</div>
+            <div id="featured-sub">by Catium &nbsp;|&nbsp; &#9733;&#9733;&#9733;&#9733;&#9733; &nbsp;|&nbsp; 1,204,532 plays</div>
             <button class="play-btn">Play</button>
           </div>
         </div>
@@ -134,11 +134,11 @@
     <!-- RIGHT SIDEBAR -->
     <aside id="right-sidebar">
       <div class="sidebar-section">
-        <div class="sidebar-header">Builders Club</div>
+        <div class="sidebar-header">Catium Club</div>
         <div id="bc-promo">
-          <div class="bc-tier bc-classic">Classic BC</div>
-          <div class="bc-tier bc-turbo">Turbo BC</div>
-          <div class="bc-tier bc-outrageous">Outrageous BC</div>
+          <div class="bc-tier bc-classic">Classic CC</div>
+          <div class="bc-tier bc-turbo">Turbo CC</div>
+          <div class="bc-tier bc-outrageous">Elite CC</div>
           <button class="upgrade-btn">Upgrade Now!</button>
         </div>
       </div>
@@ -155,8 +155,8 @@
       <div class="sidebar-section">
         <div class="sidebar-header">Latest Blog Post</div>
         <div class="blog-post">
-          <a href="#">ROBLOX Summer Tournament 2013 - Win Prizes!</a>
-          <p>Posted on April 20, 2013 by ROBLOX</p>
+          <a href="#">Catium Summer Tournament 2026 - Win Prizes!</a>
+          <p>Posted on April 20, 2026 by Catium</p>
         </div>
       </div>
     </aside>
@@ -167,7 +167,7 @@
   <footer id="main-footer">
     <div id="footer-inner">
       <div class="footer-col">
-        <strong>ROBLOX</strong>
+        <strong>Catium</strong>
         <a href="#">About Us</a>
         <a href="#">Careers</a>
         <a href="#">Press</a>
@@ -194,14 +194,14 @@
         <a href="#">Cookie Policy</a>
       </div>
     </div>
-    <div id="footer-bottom">&copy; 2013 ROBLOX Corporation. All Rights Reserved.</div>
+    <div id="footer-bottom">&copy; 2026 Catium. All Rights Reserved.</div>
   </footer>
 
   <!-- MODAL: Login -->
   <div id="modal-overlay" class="hidden">
     <div id="login-modal">
       <div id="modal-header">
-        <span>Log In to ROBLOX</span>
+        <span>Log In to Catium</span>
         <button id="modal-close" onclick="closeModal()">&times;</button>
       </div>
       <div id="modal-body">
@@ -218,6 +218,6 @@
     </div>
   </div>
 
-  <script src="app.js"></script>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
 </html>

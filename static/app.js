@@ -7,7 +7,7 @@ const COLORS = [
 const games = [
   { name: "Natural Disaster Survival", creator: "Stickmasterluke", plays: "1.2B", stars: 4.8, color: "#e94560" },
   { name: "Work at a Pizza Place",     creator: "Dued1",           plays: "893M", stars: 4.7, color: "#ff6600" },
-  { name: "Sword Fighting Tournament", creator: "ROBLOX",          plays: "654M", stars: 4.6, color: "#0052cc" },
+  { name: "Sword Fighting Tournament", creator: "Catium",          plays: "654M", stars: 4.6, color: "#0052cc" },
   { name: "Escape Room",               creator: "Builderman",      plays: "432M", stars: 4.5, color: "#008800" },
   { name: "The Quarry",                creator: "Quenty",          plays: "378M", stars: 4.4, color: "#9933ff" },
   { name: "Welcome to the Town",       creator: "litozinnamon",    plays: "312M", stars: 4.3, color: "#cc6600" },
@@ -89,7 +89,7 @@ function gameClick(el, name) {
 
 // ---- Featured Banner ----
 const featuredGames = [
-  { title: "Sword Fighting Tournament", sub: "by ROBLOX  |  ★★★★★  |  1,204,532 plays", gradient: "135deg, #1a1a2e 0%, #0f3460 60%, #e94560 100%" },
+  { title: "Sword Fighting Tournament", sub: "by Catium  |  ★★★★★  |  1,204,532 plays", gradient: "135deg, #1a1a2e 0%, #0f3460 60%, #e94560 100%" },
   { title: "Natural Disaster Survival", sub: "by Stickmasterluke  |  ★★★★★  |  1.2B plays", gradient: "135deg, #003300 0%, #006600 60%, #ccff00 100%" },
   { title: "Work at a Pizza Place",     sub: "by Dued1  |  ★★★★½  |  893M plays", gradient: "135deg, #330000 0%, #884400 60%, #ff6600 100%" },
   { title: "Apocalypse Rising",         sub: "by Gusmanak  |  ★★★★★  |  1B plays", gradient: "135deg, #111100 0%, #555533 60%, #aaaa00 100%" },
