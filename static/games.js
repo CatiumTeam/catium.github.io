@@ -9,7 +9,7 @@ function renderDbGames(games) {
   const grid = document.getElementById("games-db-grid");
   if (!grid) return;
   grid.innerHTML = games.map((g) => `
-    <div class="game-card">
+    <div class="game-card launchable-card" data-launch-url="/client?game=${encodeURIComponent(g.name)}&creator=${encodeURIComponent(g.creator)}">
       <div class="game-thumb" style="background:${g.color}22; border-bottom: 3px solid ${g.color}55;">
         ${g.live ? '<span class="game-live-badge">LIVE</span>' : ''}
         <span style="font-size:34px; position:relative; z-index:1;">${g.emoji}</span>
@@ -21,9 +21,23 @@ function renderDbGames(games) {
           <span class="game-plays">${formatPlays(g.plays)} plays - 🎮</span>
           <span class="game-stars-row">&#9733; ${Number(g.stars).toFixed(1)}</span>
         </div>
+        <a class="creator-follow launch-btn" href="/client?game=${encodeURIComponent(g.name)}&creator=${encodeURIComponent(g.creator)}">Launch 3D Client</a>
       </div>
     </div>
   `).join("");
+
+  grid.querySelectorAll(".launchable-card").forEach((card) => {
+    card.addEventListener("click", () => {
+      const url = card.dataset.launchUrl;
+      if (url) window.location.assign(url);
+    });
+  });
+}
+
+function launchClient(encodedGame, encodedCreator = "") {
+  const game = decodeURIComponent(encodedGame || "Catium Experience");
+  const creator = decodeURIComponent(encodedCreator || "Unknown Creator");
+  window.location.href = `/client?game=${encodeURIComponent(game)}&creator=${encodeURIComponent(creator)}`;
 }
 
 async function loadGames() {

@@ -170,16 +170,40 @@ function renderCreators() {
 
 // ===== GAME MODAL =====
 const ALL_GAMES = [...GAMES, ...NEW_GAMES];
+let currentModalGame = null;
+
+function launchClientForGame(game) {
+	if (!game) return;
+	window.location.href = `/client?game=${encodeURIComponent(game.name)}&creator=${encodeURIComponent(game.creator)}`;
+}
+
+function playCurrentGame() {
+	if (!currentModalGame) return;
+	launchClientForGame(currentModalGame);
+}
 
 function openGameModal(id) {
 	const g = ALL_GAMES.find(x => x.id === id);
 	if (!g) return;
-	document.getElementById('gm-thumb').style.background = g.color + '33';
-	document.getElementById('gm-thumb').innerHTML = `<span style="font-size:72px;">${g.emoji}</span>`;
-	document.getElementById('gm-title').textContent = g.name;
-	document.getElementById('gm-meta').innerHTML = `by <strong>${g.creator}</strong> &nbsp;&mdash;&nbsp; <span style="color:var(--gold)">&#9733;</span> ${g.stars} &nbsp;&mdash;&nbsp; ${g.plays} plays`;
-	document.getElementById('gm-desc').textContent = g.desc;
-	document.getElementById('game-modal-overlay').classList.remove('hidden');
+
+	const overlay = document.getElementById('game-modal-overlay');
+	const thumb = document.getElementById('gm-thumb');
+	const title = document.getElementById('gm-title');
+	const meta = document.getElementById('gm-meta');
+	const desc = document.getElementById('gm-desc');
+
+	if (!overlay || !thumb || !title || !meta || !desc) {
+		launchClientForGame(g);
+		return;
+	}
+
+	currentModalGame = g;
+	thumb.style.background = g.color + '33';
+	thumb.innerHTML = `<span style="font-size:72px;">${g.emoji}</span>`;
+	title.textContent = g.name;
+	meta.innerHTML = `by <strong>${g.creator}</strong> &nbsp;&mdash;&nbsp; <span style="color:var(--gold)">&#9733;</span> ${g.stars} &nbsp;&mdash;&nbsp; ${g.plays} plays`;
+	desc.textContent = g.desc;
+	overlay.classList.remove('hidden');
 }
 
 function closeGameModal(e) {

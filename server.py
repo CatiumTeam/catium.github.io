@@ -114,6 +114,11 @@ def games_page():
     return render_template("games.html")
 
 
+@app.route("/client")
+def client_page():
+    return render_template("client.html")
+
+
 @app.route("/experiences")
 def experiences_page():
     return render_template("experiences.html")

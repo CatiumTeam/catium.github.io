@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catium - 3D Client</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='client.css') }}" />
+</head>
+<body>
+  <nav id="navbar">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <a href="/" id="logo">
+          <span class="logo-icon">&#9670;</span>
+          <span class="logo-text">catium</span>
+        </a>
+        <div id="main-nav">
+          <a href="/" class="nav-link">Home - 🏠</a>
+          <a href="/games" class="nav-link">Games - 🎮</a>
+          <a href="/experiences" class="nav-link">Experiences - 🌍</a>
+          <a href="/community" class="nav-link">Community - 👥</a>
+          <a href="/studio" class="nav-link">Studio - 🛠️</a>
+          <a href="/premium" class="nav-link">Premium - 💎</a>
+        </div>
+      </div>
+      <div class="nav-right">
+        <a class="btn-ghost" href="/games">Back to Games</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="client-shell">
+    <section class="client-sidebar">
+      <p class="page-kicker">3D Client - Beta</p>
+      <h1 id="client-game-title">Launching...</h1>
+      <p id="client-game-sub">Preparing a world for your selected game.</p>
+
+      <div class="client-card">
+        <h3>Controls</h3>
+        <ul>
+          <li>W A S D - Move</li>
+          <li>Mouse - Rotate camera</li>
+          <li>Shift - Sprint</li>
+          <li>R - Reset position</li>
+        </ul>
+      </div>
+
+      <div class="client-card">
+        <h3>Status</h3>
+        <p id="client-status">Client loaded - ready.</p>
+      </div>
+
+      <div class="client-card">
+        <h3>Lobby - 👥</h3>
+        <div id="lobby-list" class="client-list"></div>
+      </div>
+
+      <div class="client-card">
+        <h3>Party Chat - 💬</h3>
+        <div id="chat-log" class="chat-log"></div>
+        <div class="chat-entry-row">
+          <input id="chat-input" type="text" placeholder="Send a message to the lobby..." />
+          <button id="chat-send" class="btn-primary">Send</button>
+        </div>
+      </div>
+
+      <div class="client-card">
+        <h3>Note</h3>
+        <p>This is a lightweight in-browser 3D prototype client powered by Three.js.</p>
+      </div>
+    </section>
+
+    <section class="client-canvas-wrap">
+      <canvas id="client-canvas"></canvas>
+      <div class="client-hud">Catium Client - Online</div>
+    </section>
+  </main>
+
+  <footer id="footer">
+    <div class="footer-bottom">
+      <span>&copy; 2026 Catium, Inc. - Client build active. 💙</span>
+      <div class="footer-socials">
+        <a href="/games">Games</a>
+        <a href="/community">Community</a>
+        <a href="/studio">Studio</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/three@0.164.1/build/three.min.js"></script>
+  <script src="{{ url_for('static', filename='client.js') }}"></script>
+</body>
+</html>
