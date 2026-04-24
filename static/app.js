@@ -39,6 +39,28 @@ const HERO_GAMES = [
 	{ title:"Phantom Forces",            creator:"StyLiS Studios",  stars:"4.7", plays:"500M", gradient:"135deg, #0a0a0a 0%, #1a1a1a 50%, #2a2a2a 80%, #404040 100%" },
 ];
 
+const ACTIVITY = [
+	{ user: "NexusBuild", action: "published an update for", target: "Factory Tycoon Pro", time: "2m ago" },
+	{ user: "Polyhex", action: "started a live event in", target: "Freeze Tag Arena", time: "7m ago" },
+	{ user: "Builderman", action: "joined the studio", target: "Catium Originals", time: "15m ago" },
+	{ user: "Vyriss", action: "shipped a balance patch for", target: "Disaster Survival", time: "27m ago" },
+	{ user: "Simbuilder", action: "hit 10M visits in", target: "Vehicle Simulator", time: "43m ago" },
+];
+
+const STUDIOS = [
+	{ name: "Catium Originals", members: "21 members", openRoles: "2 roles open", tags: ["Scripter", "Builder"] },
+	{ name: "Moonlight Devs", members: "8 members", openRoles: "3 roles open", tags: ["UI", "Animator"] },
+	{ name: "Skyforge Team", members: "14 members", openRoles: "1 role open", tags: ["VFX", "Scripter"] },
+	{ name: "Urban Pixel", members: "11 members", openRoles: "4 roles open", tags: ["Map Design", "QA"] },
+];
+
+const CREATORS = [
+	{ name: "Stickmasterluke", stat: "2.1B total plays" },
+	{ name: "Nikilis", stat: "1.4B total plays" },
+	{ name: "Dued1", stat: "920M total plays" },
+	{ name: "Den_S", stat: "620M total plays" },
+];
+
 // ===== HERO =====
 let heroIdx = 0;
 let heroTimer;
@@ -69,7 +91,8 @@ function goHero(idx) {
 function renderGames(containerId, list) {
 	const el = document.getElementById(containerId);
 	if (!el) return;
-	el.innerHTML = list.slice(0,12).map(g => `
+	const limit = containerId === 'new-games' ? 8 : 12;
+	el.innerHTML = list.slice(0, limit).map(g => `
 		<div class="game-card" onclick="openGameModal(${g.id})">
 			<div class="game-thumb" style="background:${g.color}22; border-bottom: 3px solid ${g.color}40;">
 				${g.live ? '<span class="game-live-badge">LIVE</span>' : ''}
@@ -83,6 +106,52 @@ function renderGames(containerId, list) {
 					<span class="game-stars-row">&#9733; ${g.stars}</span>
 				</div>
 			</div>
+		</div>
+	`).join('');
+}
+
+function renderActivity() {
+	const el = document.getElementById('activity-feed');
+	if (!el) return;
+	el.innerHTML = ACTIVITY.map(item => `
+		<div class="activity-item">
+			<div class="activity-main">
+				<div class="activity-avatar">${item.user.charAt(0)}</div>
+				<div class="activity-text"><strong>${item.user}</strong> ${item.action} <strong>${item.target}</strong></div>
+			</div>
+			<div class="activity-time">${item.time}</div>
+		</div>
+	`).join('');
+}
+
+function renderStudios() {
+	const el = document.getElementById('studio-grid');
+	if (!el) return;
+	el.innerHTML = STUDIOS.map(studio => `
+		<div class="studio-card">
+			<h4>${studio.name}</h4>
+			<div class="studio-meta">${studio.members} - ${studio.openRoles}</div>
+			<div class="studio-tags">
+				${studio.tags.map(tag => `<span class="studio-tag">${tag}</span>`).join('')}
+			</div>
+			<button class="studio-join">Request Invite</button>
+		</div>
+	`).join('');
+}
+
+function renderCreators() {
+	const el = document.getElementById('creator-list');
+	if (!el) return;
+	el.innerHTML = CREATORS.map(c => `
+		<div class="creator-item">
+			<div class="creator-profile">
+				<div class="creator-avatar">${c.name.charAt(0)}</div>
+				<div>
+					<div class="creator-name">${c.name}</div>
+					<div class="creator-stat">${c.stat}</div>
+				</div>
+			</div>
+			<button class="creator-follow">Follow</button>
 		</div>
 	`).join('');
 }
@@ -204,12 +273,15 @@ function initPills() {
 
 // ===== NAV ACTIVE =====
 function initNav() {
+	const path = window.location.pathname;
 	document.querySelectorAll('.nav-link').forEach(link => {
-		link.addEventListener('click', e => {
-			e.preventDefault();
-			document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+		const href = link.getAttribute('href');
+		if (!href) return;
+		if ((href === '/' && path === '/') || (href !== '/' && path.startsWith(href))) {
 			link.classList.add('active');
-		});
+		} else if (href !== '/') {
+			link.classList.remove('active');
+		}
 	});
 }
 
@@ -217,8 +289,10 @@ function initNav() {
 document.addEventListener('DOMContentLoaded', () => {
 	buildHeroDots();
 	heroTimer = setInterval(() => goHero((heroIdx+1) % HERO_GAMES.length), 6000);
+	renderActivity();
+	renderStudios();
+	renderCreators();
 	renderGames('popular-games', GAMES);
-	renderGames('top-rated', TOP_RATED);
 	renderGames('new-games', NEW_GAMES);
 	initSearch();
 	initPills();

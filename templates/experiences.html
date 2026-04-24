@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catium - Experiences</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <nav id="navbar">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <a href="/" id="logo">
+          <span class="logo-icon">&#9670;</span>
+          <span class="logo-text">catium</span>
+        </a>
+        <div id="main-nav">
+          <a href="/" class="nav-link">Home</a>
+          <a href="/games" class="nav-link">Games</a>
+          <a href="/experiences" class="nav-link active">Experiences</a>
+          <a href="/community" class="nav-link">Community</a>
+          <a href="/studio" class="nav-link">Studio</a>
+          <a href="/premium" class="nav-link">Premium</a>
+        </div>
+      </div>
+      <div class="nav-right">
+        <div id="search-wrap">
+          <span class="search-icon">&#128269;</span>
+          <input type="text" id="search-input" placeholder="Search experiences..." />
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="page-shell">
+    <section class="page-hero">
+      <p class="page-kicker">Experiences</p>
+      <h1>Explore worlds built by creators</h1>
+      <p>Jump into action, roleplay, obbies, and live events from across the Catium platform.</p>
+    </section>
+
+    <section class="page-grid">
+      <article class="page-panel">
+        <h2>Trending Now</h2>
+        <div class="game-row" id="popular-games"></div>
+      </article>
+      <article class="page-panel">
+        <h2>Top Rated</h2>
+        <div class="game-row" id="top-rated"></div>
+      </article>
+      <article class="page-panel">
+        <h2>Recently Updated</h2>
+        <div class="game-row compact" id="new-games"></div>
+      </article>
+    </section>
+  </main>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

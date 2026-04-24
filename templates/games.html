@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catium - Games</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <nav id="navbar">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <a href="/" id="logo">
+          <span class="logo-icon">&#9670;</span>
+          <span class="logo-text">catium</span>
+        </a>
+        <div id="main-nav">
+          <a href="/" class="nav-link">Home</a>
+          <a href="/games" class="nav-link active">Games</a>
+          <a href="/experiences" class="nav-link">Experiences</a>
+          <a href="/community" class="nav-link">Community</a>
+          <a href="/studio" class="nav-link">Studio</a>
+          <a href="/premium" class="nav-link">Premium</a>
+        </div>
+      </div>
+      <div class="nav-right">
+        <div id="search-wrap">
+          <span class="search-icon">&#128269;</span>
+          <input type="text" id="games-search" placeholder="Search games by title or creator" />
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="page-shell">
+    <section class="page-hero">
+      <p class="page-kicker">Games Database</p>
+      <h1>Browse all games from the Catium database</h1>
+      <p>These cards are loaded from SQLite through the backend API, with sort and limit controls.</p>
+    </section>
+
+    <section class="page-panel">
+      <div class="games-toolbar">
+        <div class="games-control">
+          <label for="games-sort">Sort by</label>
+          <select id="games-sort">
+            <option value="plays">Most Played</option>
+            <option value="stars">Highest Rated</option>
+            <option value="name">Name</option>
+            <option value="id">Newest Added</option>
+          </select>
+        </div>
+        <div class="games-control">
+          <label for="games-limit">Show</label>
+          <select id="games-limit">
+            <option value="8">8</option>
+            <option value="12" selected>12</option>
+            <option value="24">24</option>
+            <option value="50">50</option>
+          </select>
+        </div>
+      </div>
+      <div class="game-row" id="games-db-grid"></div>
+    </section>
+  </main>
+
+  <script src="{{ url_for('static', filename='games.js') }}"></script>
+</body>
+</html>

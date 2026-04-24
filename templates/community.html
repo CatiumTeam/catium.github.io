@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catium - Community</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <nav id="navbar">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <a href="/" id="logo">
+          <span class="logo-icon">&#9670;</span>
+          <span class="logo-text">catium</span>
+        </a>
+        <div id="main-nav">
+          <a href="/" class="nav-link">Home</a>
+          <a href="/games" class="nav-link">Games</a>
+          <a href="/experiences" class="nav-link">Experiences</a>
+          <a href="/community" class="nav-link active">Community</a>
+          <a href="/studio" class="nav-link">Studio</a>
+          <a href="/premium" class="nav-link">Premium</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="page-shell">
+    <section class="page-hero">
+      <p class="page-kicker">Community</p>
+      <h1>Follow friends, creators, and studios</h1>
+      <p>Track updates, discover events, and stay in sync with what your network is playing and building.</p>
+    </section>
+
+    <section class="platform-shell">
+      <div class="platform-main">
+        <article class="content-block">
+          <div class="section-title-row">
+            <h2>Live Activity Feed</h2>
+          </div>
+          <div class="activity-feed" id="activity-feed"></div>
+        </article>
+
+        <article class="content-block">
+          <div class="section-title-row">
+            <h2>Events This Week</h2>
+          </div>
+          <ul class="event-list">
+            <li><span>Apr 26</span> Weekend Building Jam</li>
+            <li><span>Apr 30</span> UGC Workshop Live</li>
+            <li><span>May 03</span> PvP Creator Cup</li>
+            <li><span>May 05</span> Creator Economy AMA</li>
+          </ul>
+        </article>
+      </div>
+
+      <aside class="platform-side">
+        <section class="side-card">
+          <h3>Creator Spotlight</h3>
+          <div class="creator-list" id="creator-list"></div>
+        </section>
+      </aside>
+    </section>
+  </main>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catium - Premium</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <nav id="navbar">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <a href="/" id="logo">
+          <span class="logo-icon">&#9670;</span>
+          <span class="logo-text">catium</span>
+        </a>
+        <div id="main-nav">
+          <a href="/" class="nav-link">Home</a>
+          <a href="/games" class="nav-link">Games</a>
+          <a href="/experiences" class="nav-link">Experiences</a>
+          <a href="/community" class="nav-link">Community</a>
+          <a href="/studio" class="nav-link">Studio</a>
+          <a href="/premium" class="nav-link active">Premium</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="page-shell">
+    <section class="page-hero">
+      <p class="page-kicker">Premium</p>
+      <h1>Upgrade your Catium membership</h1>
+      <p>Get monthly CAT, exclusive items, and premium community perks across the platform.</p>
+    </section>
+
+    <section id="premium-section">
+      <div class="premium-inner">
+        <div class="premium-text">
+          <div class="premium-badge">Catium Premium</div>
+          <h2>Unlock the full experience</h2>
+          <p>Get exclusive avatar items, monthly CAT allowance, and access to premium-only games.</p>
+          <div class="premium-tiers">
+            <div class="ptier">
+              <div class="ptier-name">Starter</div>
+              <div class="ptier-price">450 <span>CAT/mo</span></div>
+            </div>
+            <div class="ptier highlight">
+              <div class="ptier-name">Pro</div>
+              <div class="ptier-price">1,000 <span>CAT/mo</span></div>
+            </div>
+            <div class="ptier">
+              <div class="ptier-name">Elite</div>
+              <div class="ptier-price">2,200 <span>CAT/mo</span></div>
+            </div>
+          </div>
+          <button class="btn-primary btn-lg">Subscribe</button>
+        </div>
+        <div class="premium-graphic">
+          <div class="pg-diamond">&#9670;</div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
