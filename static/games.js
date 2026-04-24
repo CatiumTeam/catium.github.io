@@ -18,7 +18,7 @@ function renderDbGames(games) {
         <div class="game-name" title="${g.name}">${g.name}</div>
         <div class="game-creator">${g.creator}</div>
         <div class="game-footer">
-          <span class="game-plays">${formatPlays(g.plays)} plays</span>
+          <span class="game-plays">${formatPlays(g.plays)} plays - 🎮</span>
           <span class="game-stars-row">&#9733; ${Number(g.stars).toFixed(1)}</span>
         </div>
       </div>

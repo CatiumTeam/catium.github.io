@@ -1085,3 +1085,180 @@ input { font-family: inherit; }
 	border-color: var(--accent);
 }
 
+/* ===== REFERENCE STYLE OVERRIDES (Bootstrap-like Dark) ===== */
+:root {
+	--bg: #0c0c0c;
+	--bg-card: #121212;
+	--bg-elevated: #151515;
+	--bg-input: #1a1a1a;
+	--border: rgba(255, 255, 255, 0.16);
+	--border-hover: rgba(255, 255, 255, 0.26);
+	--text: #f5f5f5;
+	--text-2: #b5b5b5;
+	--text-3: #888;
+	--accent: #0d6efd;
+	--accent-dark: #0b5ed7;
+	--accent-light: #6ea8fe;
+	--accent-glow: rgba(13, 110, 253, 0.28);
+}
+
+body {
+	background: #090909;
+	color: var(--text);
+}
+
+#navbar {
+	background: rgba(0, 0, 0, 0.94);
+	backdrop-filter: blur(8px);
+	border-bottom: 1px solid var(--border);
+}
+
+.logo-icon {
+	color: var(--accent);
+	filter: none;
+}
+
+.logo-text {
+	font-weight: 800;
+	text-transform: none;
+	letter-spacing: -0.3px;
+}
+
+.nav-link {
+	border-radius: 6px;
+}
+
+.nav-link.active {
+	background: rgba(13, 110, 253, 0.2);
+	color: #fff;
+}
+
+#search-input,
+.games-control select,
+#modal-login input[type="text"],
+#modal-login input[type="password"],
+#modal-signup input[type="text"],
+#modal-signup input[type="email"],
+#modal-signup input[type="password"] {
+	background: #111;
+	border-color: var(--border);
+}
+
+.btn-primary {
+	background: var(--accent);
+	box-shadow: none;
+}
+
+.btn-primary:hover {
+	background: var(--accent-dark);
+	transform: translateY(-1px);
+	box-shadow: none;
+}
+
+.btn-ghost,
+.btn-ghost-lg,
+.tool-btn,
+.creator-follow {
+	background: transparent;
+	border-color: var(--border);
+	color: var(--text-2);
+}
+
+.btn-ghost:hover,
+.btn-ghost-lg:hover,
+.tool-btn:hover,
+.creator-follow:hover {
+	background: rgba(255, 255, 255, 0.04);
+	color: #fff;
+}
+
+#hero,
+.page-hero {
+	background: linear-gradient(145deg, #0f0f0f 0%, #141414 55%, #191919 100%);
+	border: 1px solid var(--border);
+	border-radius: 18px;
+	overflow: hidden;
+}
+
+.hero-bg {
+	background: linear-gradient(145deg, #111 0%, #171717 65%, #1e1e1e 100%);
+}
+
+.hero-bg::after {
+	background: linear-gradient(to top, rgba(0, 0, 0, 0.86) 12%, rgba(0, 0, 0, 0.45) 62%, transparent 100%);
+}
+
+.hero-badge,
+.premium-badge,
+.page-kicker {
+	background: rgba(13, 110, 253, 0.16);
+	border: 1px solid rgba(13, 110, 253, 0.44);
+	color: var(--accent-light);
+}
+
+.stats-bar,
+.content-block,
+.side-card,
+.page-panel,
+.game-card,
+.activity-item,
+.studio-card,
+.creator-item,
+#modal,
+#game-modal {
+	background: #111;
+	border: 1px solid var(--border);
+	box-shadow: none;
+}
+
+.game-card:hover,
+.studio-card:hover {
+	transform: translateY(-2px);
+	border-color: var(--border-hover);
+	box-shadow: 0 0 0 1px rgba(13, 110, 253, 0.3);
+}
+
+.game-thumb::after {
+	background: linear-gradient(to bottom, transparent 58%, rgba(0, 0, 0, 0.38) 100%);
+}
+
+.game-live-badge {
+	background: #dc3545;
+}
+
+#premium-section {
+	background: linear-gradient(145deg, #0f0f0f 0%, #151515 62%, #1c1c1c 100%);
+	border: 1px solid var(--border);
+}
+
+#premium-section::before {
+	background: radial-gradient(ellipse at 70% 50%, rgba(13, 110, 253, 0.16) 0%, transparent 70%);
+}
+
+.ptier.highlight {
+	background: rgba(13, 110, 253, 0.16);
+	border-color: rgba(13, 110, 253, 0.45);
+	box-shadow: none;
+}
+
+.pg-diamond {
+	color: var(--accent);
+	filter: drop-shadow(0 0 24px rgba(13, 110, 253, 0.35));
+}
+
+#footer {
+	background: #0b0b0b;
+	border-top: 1px solid var(--border);
+}
+
+.footer-col a,
+.footer-bottom,
+.footer-brand p {
+	color: var(--text-2);
+}
+
+.footer-col a:hover,
+.footer-socials a:hover {
+	color: #fff;
+}
+

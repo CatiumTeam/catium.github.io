@@ -40,25 +40,25 @@ const HERO_GAMES = [
 ];
 
 const ACTIVITY = [
-	{ user: "NexusBuild", action: "published an update for", target: "Factory Tycoon Pro", time: "2m ago" },
-	{ user: "Polyhex", action: "started a live event in", target: "Freeze Tag Arena", time: "7m ago" },
-	{ user: "Builderman", action: "joined the studio", target: "Catium Originals", time: "15m ago" },
-	{ user: "Vyriss", action: "shipped a balance patch for", target: "Disaster Survival", time: "27m ago" },
-	{ user: "Simbuilder", action: "hit 10M visits in", target: "Vehicle Simulator", time: "43m ago" },
+	{ user: "NexusBuild", action: "published an update for", target: "Factory Tycoon Pro - 🏭", time: "2m ago" },
+	{ user: "Polyhex", action: "started a live event in", target: "Freeze Tag Arena - ❄️", time: "7m ago" },
+	{ user: "Builderman", action: "joined the studio", target: "Catium Originals - 🎬", time: "15m ago" },
+	{ user: "Vyriss", action: "shipped a balance patch for", target: "Disaster Survival - 🌋", time: "27m ago" },
+	{ user: "Simbuilder", action: "hit 10M visits in", target: "Vehicle Simulator - 🚗", time: "43m ago" },
 ];
 
 const STUDIOS = [
-	{ name: "Catium Originals", members: "21 members", openRoles: "2 roles open", tags: ["Scripter", "Builder"] },
-	{ name: "Moonlight Devs", members: "8 members", openRoles: "3 roles open", tags: ["UI", "Animator"] },
-	{ name: "Skyforge Team", members: "14 members", openRoles: "1 role open", tags: ["VFX", "Scripter"] },
-	{ name: "Urban Pixel", members: "11 members", openRoles: "4 roles open", tags: ["Map Design", "QA"] },
+	{ name: "Catium Originals - 🎬", members: "21 members", openRoles: "2 roles open", tags: ["Scripter", "Builder"] },
+	{ name: "Moonlight Devs - 🌙", members: "8 members", openRoles: "3 roles open", tags: ["UI", "Animator"] },
+	{ name: "Skyforge Team - ⚒️", members: "14 members", openRoles: "1 role open", tags: ["VFX", "Scripter"] },
+	{ name: "Urban Pixel - 🧩", members: "11 members", openRoles: "4 roles open", tags: ["Map Design", "QA"] },
 ];
 
 const CREATORS = [
-	{ name: "Stickmasterluke", stat: "2.1B total plays" },
-	{ name: "Nikilis", stat: "1.4B total plays" },
-	{ name: "Dued1", stat: "920M total plays" },
-	{ name: "Den_S", stat: "620M total plays" },
+	{ name: "Stickmasterluke - 🌟", stat: "2.1B total plays" },
+	{ name: "Nikilis - 🔥", stat: "1.4B total plays" },
+	{ name: "Dued1 - 🍕", stat: "920M total plays" },
+	{ name: "Den_S - 🎡", stat: "620M total plays" },
 ];
 
 // ===== HERO =====
@@ -81,7 +81,7 @@ function goHero(idx) {
 	const g = HERO_GAMES[idx];
 	if (bg)    bg.style.background = `linear-gradient(${g.gradient})`;
 	if (title) title.textContent = g.title;
-	if (meta)  meta.innerHTML = `by <strong>${g.creator}</strong> &nbsp;&middot;&nbsp; <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> ${g.stars} &nbsp;&middot;&nbsp; ${g.plays} plays`;
+	if (meta)  meta.innerHTML = `by <strong>${g.creator}</strong> &nbsp;&mdash;&nbsp; <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> ${g.stars} &nbsp;&mdash;&nbsp; ${g.plays} plays`;
 	document.querySelectorAll('.hero-dot').forEach((d,i) => d.classList.toggle('active', i===idx));
 	clearInterval(heroTimer);
 	heroTimer = setInterval(() => goHero((heroIdx+1) % HERO_GAMES.length), 6000);
@@ -102,7 +102,7 @@ function renderGames(containerId, list) {
 				<div class="game-name" title="${g.name}">${g.name}</div>
 				<div class="game-creator">${g.creator}</div>
 				<div class="game-footer">
-					<span class="game-plays">${g.plays} plays</span>
+					<span class="game-plays">${g.plays} plays - 🎮</span>
 					<span class="game-stars-row">&#9733; ${g.stars}</span>
 				</div>
 			</div>
@@ -119,7 +119,7 @@ function renderActivity() {
 				<div class="activity-avatar">${item.user.charAt(0)}</div>
 				<div class="activity-text"><strong>${item.user}</strong> ${item.action} <strong>${item.target}</strong></div>
 			</div>
-			<div class="activity-time">${item.time}</div>
+			<div class="activity-time">${item.time} - ⏱️</div>
 		</div>
 	`).join('');
 }
@@ -130,11 +130,11 @@ function renderStudios() {
 	el.innerHTML = STUDIOS.map(studio => `
 		<div class="studio-card">
 			<h4>${studio.name}</h4>
-			<div class="studio-meta">${studio.members} - ${studio.openRoles}</div>
+			<div class="studio-meta">${studio.members} &mdash; ${studio.openRoles}</div>
 			<div class="studio-tags">
 				${studio.tags.map(tag => `<span class="studio-tag">${tag}</span>`).join('')}
 			</div>
-			<button class="studio-join">Request Invite</button>
+			<button class="studio-join">Request Invite - ✉️</button>
 		</div>
 	`).join('');
 }
@@ -151,7 +151,7 @@ function renderCreators() {
 					<div class="creator-stat">${c.stat}</div>
 				</div>
 			</div>
-			<button class="creator-follow">Follow</button>
+			<button class="creator-follow">Follow - ➕</button>
 		</div>
 	`).join('');
 }
@@ -165,7 +165,7 @@ function openGameModal(id) {
 	document.getElementById('gm-thumb').style.background = g.color + '33';
 	document.getElementById('gm-thumb').innerHTML = `<span style="font-size:72px;">${g.emoji}</span>`;
 	document.getElementById('gm-title').textContent = g.name;
-	document.getElementById('gm-meta').innerHTML = `by <strong>${g.creator}</strong> &nbsp;&middot;&nbsp; <span style="color:var(--gold)">&#9733;</span> ${g.stars} &nbsp;&middot;&nbsp; ${g.plays} plays`;
+	document.getElementById('gm-meta').innerHTML = `by <strong>${g.creator}</strong> &nbsp;&mdash;&nbsp; <span style="color:var(--gold)">&#9733;</span> ${g.stars} &nbsp;&mdash;&nbsp; ${g.plays} plays`;
 	document.getElementById('gm-desc').textContent = g.desc;
 	document.getElementById('game-modal-overlay').classList.remove('hidden');
 }
