@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Catium 3D Client</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Nunito',sans-serif;background:#0d0b1a;color:#f0e8ff;overflow:hidden;height:100vh;width:100vw;}
+#c{display:block;width:100%;height:100%;}
+#ui{position:absolute;inset:0;pointer-events:none;}
+
+#topbar{
+  position:absolute;top:0;left:0;right:0;height:44px;
+  background:rgba(10,8,22,0.92);
+  border-bottom:1px solid rgba(168,85,247,0.25);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 16px;pointer-events:all;
+  backdrop-filter:blur(10px);
+}
+.tb-logo{font-family:'Fredoka One',cursive;font-size:20px;color:#c084fc;display:flex;align-items:center;gap:6px;}
+.tb-center{display:flex;gap:4px;}
+.tb-tab{font-size:12px;font-weight:700;color:#9d7edd;padding:6px 12px;border-radius:8px;cursor:pointer;transition:all .2s;pointer-events:all;}
+.tb-tab:hover,.tb-tab.active{background:rgba(124,58,237,0.3);color:#e0d4ff;}
+.tb-right{display:flex;align-items:center;gap:8px;}
+.tb-btn{font-size:12px;font-weight:800;padding:5px 14px;border-radius:8px;cursor:pointer;border:none;font-family:'Nunito',sans-serif;pointer-events:all;transition:all .2s;}
+.tb-btn.pri{background:linear-gradient(135deg,#7c3aed,#a855f7);color:white;}
+.tb-btn.sec{background:rgba(124,58,237,0.2);border:1px solid rgba(168,85,247,0.4);color:#c084fc;}
+.stat{font-size:11px;color:#9d7edd;font-weight:700;display:flex;align-items:center;gap:4px;}
+.dot{width:6px;height:6px;border-radius:50%;background:#4ade80;animation:pulse 1.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+
+#chatbox{
+  position:absolute;bottom:80px;left:16px;width:240px;
+  background:rgba(10,8,22,0.85);border:1px solid rgba(168,85,247,0.2);
+  border-radius:12px;overflow:hidden;backdrop-filter:blur(8px);pointer-events:all;
+}
+#chatlog{height:120px;overflow-y:auto;padding:10px 10px 6px;display:flex;flex-direction:column;gap:4px;}
+#chatlog::-webkit-scrollbar{width:3px;}
+#chatlog::-webkit-scrollbar-thumb{background:rgba(168,85,247,0.4);border-radius:2px;}
+.cmsg{font-size:11px;line-height:1.4;}
+.cmsg .cn{font-weight:800;margin-right:4px;}
+.cn.p{color:#f472b6;}.cn.o{color:#fb923c;}.cn.g{color:#4ade80;}.cn.b{color:#60a5fa;}.cn.y{color:#facc15;}
+#chatinput{display:flex;border-top:1px solid rgba(168,85,247,0.15);}
+#chatinput input{flex:1;background:transparent;border:none;color:#e0d4ff;font-family:'Nunito',sans-serif;font-size:11px;padding:8px 10px;outline:none;}
+#chatinput input::placeholder{color:#5a4a7a;}
+#chatinput button{background:rgba(124,58,237,0.3);border:none;color:#c084fc;font-size:12px;padding:0 10px;cursor:pointer;}
+
+#sidebar{
+  position:absolute;top:56px;right:16px;width:190px;
+  display:flex;flex-direction:column;gap:8px;pointer-events:all;
+}
+.side-card{background:rgba(10,8,22,0.85);border:1px solid rgba(168,85,247,0.2);border-radius:10px;padding:10px 12px;backdrop-filter:blur(8px);}
+.side-title{font-size:10px;font-weight:800;color:#7c6a9e;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+.side-val{font-size:18px;font-weight:800;color:#e0d4ff;font-family:'Fredoka One',cursive;}
+.side-sub{font-size:10px;color:#9d7edd;margin-top:1px;}
+.mini-list{display:flex;flex-direction:column;gap:4px;}
+.mini-item{display:flex;align-items:center;justify-content:space-between;font-size:11px;}
+.mini-item .ml{color:#c4b5fd;font-weight:700;}
+.mini-item .mr{color:#7c6a9e;}
+.bar-wrap{background:rgba(124,58,237,0.1);border-radius:4px;height:5px;margin-top:4px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,#7c3aed,#a855f7);}
+
+#bottomhud{
+  position:absolute;bottom:16px;left:50%;transform:translateX(-50%);
+  display:flex;align-items:center;gap:8px;pointer-events:all;
+}
+.hud-btn{
+  background:rgba(10,8,22,0.88);border:1px solid rgba(168,85,247,0.25);
+  border-radius:10px;padding:8px 16px;cursor:pointer;
+  font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;color:#c4b5fd;
+  transition:all .2s;display:flex;align-items:center;gap:6px;backdrop-filter:blur(8px);
+}
+.hud-btn:hover{background:rgba(124,58,237,0.3);border-color:rgba(168,85,247,0.5);}
+.hud-btn.active{background:linear-gradient(135deg,#7c3aed,#a855f7);border-color:transparent;color:white;}
+.hud-sep{width:1px;height:28px;background:rgba(168,85,247,0.2);}
+
+#controls{
+  position:absolute;bottom:72px;right:16px;
+  background:rgba(10,8,22,0.75);border:1px solid rgba(168,85,247,0.15);
+  border-radius:8px;padding:8px 10px;font-size:10px;color:#6a5a8e;
+  pointer-events:none;line-height:1.8;
+}
+.key{background:rgba(124,58,237,0.2);border:1px solid rgba(168,85,247,0.3);border-radius:4px;padding:1px 5px;font-size:10px;color:#a78bfa;margin-right:4px;}
+
+#minimap{
+  position:absolute;top:56px;left:16px;
+  width:140px;height:140px;border-radius:10px;overflow:hidden;
+  border:1px solid rgba(168,85,247,0.25);pointer-events:none;
+}
+#minimap-label{position:absolute;bottom:5px;left:0;right:0;text-align:center;font-size:9px;color:#7c6a9e;font-weight:700;letter-spacing:.5px;}
+
+#avatar-panel{position:absolute;top:56px;left:170px;pointer-events:all;}
+.av-btn{background:rgba(10,8,22,0.85);border:1px solid rgba(168,85,247,0.25);border-radius:8px;padding:5px 10px;cursor:pointer;font-size:11px;font-weight:800;color:#c4b5fd;display:flex;align-items:center;gap:5px;backdrop-filter:blur(6px);}
+.av-btn:hover{background:rgba(124,58,237,0.3);}
+
+#notif{position:absolute;top:56px;left:50%;transform:translateX(-50%);background:rgba(124,58,237,0.25);border:1px solid rgba(168,85,247,0.4);border-radius:8px;padding:7px 18px;font-size:12px;font-weight:700;color:#c084fc;pointer-events:none;opacity:0;transition:opacity .4s;backdrop-filter:blur(8px);white-space:nowrap;}
+#notif.show{opacity:1;}
+
+#statbar{position:absolute;bottom:72px;left:16px;display:flex;flex-direction:column;gap:5px;pointer-events:none;}
+.stat-row{display:flex;align-items:center;gap:7px;font-size:10px;color:#9d7edd;font-weight:700;}
+.stat-bar{width:100px;height:6px;background:rgba(255,255,255,0.08);border-radius:3px;overflow:hidden;}
+.sb-fill{height:100%;border-radius:3px;}
+.sb-hp{background:linear-gradient(90deg,#e11d48,#f472b6);}
+.sb-mp{background:linear-gradient(90deg,#2563eb,#60a5fa);}
+.sb-en{background:linear-gradient(90deg,#d97706,#fbbf24);}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="ui">
+  <div id="topbar">
+    <div class="tb-logo">
+      <svg width="22" height="22" viewBox="0 0 40 40"><ellipse cx="20" cy="22" rx="14" ry="12" fill="#7c3aed"/><polygon points="8,14 4,4 14,12" fill="#7c3aed"/><polygon points="32,14 36,4 26,12" fill="#7c3aed"/><polygon points="9,13 6,6 14,12" fill="#d8b4fe"/><polygon points="31,13 34,6 26,12" fill="#d8b4fe"/><ellipse cx="15" cy="20" rx="2.5" ry="3" fill="#0d0b1a"/><ellipse cx="25" cy="20" rx="2.5" ry="3" fill="#0d0b1a"/><circle cx="14.5" cy="19" r="0.8" fill="white"/><circle cx="24.5" cy="19" r="0.8" fill="white"/><polygon points="20,24 18.5,26 21.5,26" fill="#f9a8d4"/></svg>
+      Catium
+    </div>
+    <div class="tb-center">
+      <div class="tb-tab active">🏰 Purrcastle Escape</div>
+      <div class="tb-tab">🌌 Midnight Prowl</div>
+      <div class="tb-tab">+ Join World</div>
+    </div>
+    <div class="tb-right">
+      <div class="stat"><div class="dot"></div>32,419 online</div>
+      <button class="tb-btn sec" id="invBtn">👥 Invite</button>
+      <button class="tb-btn pri" id="menuBtn">☰ Menu</button>
+    </div>
+  </div>
+
+  <div id="notif">🐱 PurrMaster joined the world!</div>
+
+  <div id="minimap">
+    <canvas id="mmCanvas" width="140" height="140"></canvas>
+    <div id="minimap-label">PURRCASTLE ESCAPE</div>
+  </div>
+
+  <div id="avatar-panel">
+    <div class="av-btn" id="avBtn">😸 WhiskerKnight ▾</div>
+  </div>
+
+  <div id="sidebar">
+    <div class="side-card">
+      <div class="side-title">World Info</div>
+      <div class="side-val">🏰</div>
+      <div class="side-sub">Purrcastle Escape</div>
+      <div style="margin-top:8px;" class="mini-list">
+        <div class="mini-item"><span class="ml">Players</span><span class="mr">241K</span></div>
+        <div class="mini-item"><span class="ml">Creator</span><span class="mr">MeowDev</span></div>
+        <div class="mini-item"><span class="ml">Rating</span><span class="mr">★ 4.9</span></div>
+      </div>
+    </div>
+    <div class="side-card">
+      <div class="side-title">Your Stats</div>
+      <div class="mini-list">
+        <div class="mini-item"><span class="ml">Level</span><span class="mr" style="color:#facc15;font-weight:800;">42</span></div>
+        <div class="mini-item"><span class="ml">PawCoins</span><span class="mr">⭐ 8,440</span></div>
+        <div class="mini-item"><span class="ml">Rank</span><span class="mr" style="color:#c084fc;">#217</span></div>
+      </div>
+      <div style="margin-top:8px;">
+        <div style="font-size:9px;color:#7c6a9e;margin-bottom:3px;">XP TO NEXT LEVEL</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:68%"></div></div>
+      </div>
+    </div>
+    <div class="side-card">
+      <div class="side-title">Nearby Players</div>
+      <div class="mini-list" id="nearbyList"></div>
+    </div>
+  </div>
+
+  <div id="statbar">
+    <div class="stat-row">❤️<div class="stat-bar"><div class="sb-fill sb-hp" id="hpBar" style="width:82%"></div></div><span id="hpVal">82</span></div>
+    <div class="stat-row">💧<div class="stat-bar"><div class="sb-fill sb-mp" id="mpBar" style="width:55%"></div></div><span id="mpVal">55</span></div>
+    <div class="stat-row">⚡<div class="stat-bar"><div class="sb-fill sb-en" id="enBar" style="width:93%"></div></div><span id="enVal">93</span></div>
+  </div>
+
+  <div id="chatbox">
+    <div id="chatlog"></div>
+    <div id="chatinput">
+      <input id="chatField" type="text" placeholder="Press Enter to chat...">
+      <button id="sendBtn">➤</button>
+    </div>
+  </div>
+
+  <div id="bottomhud">
+    <div class="hud-btn active" id="btn-walk">🐾 Walk</div>
+    <div class="hud-btn" id="btn-run">⚡ Run</div>
+    <div class="hud-sep"></div>
+    <div class="hud-btn" id="btn-jump">🦘 Jump</div>
+    <div class="hud-btn" id="btn-emote">😸 Emote</div>
+    <div class="hud-sep"></div>
+    <div class="hud-btn" id="btn-inv">🎒 Inventory</div>
+    <div class="hud-btn" id="btn-map">🗺️ Map</div>
+  </div>
+
+  <div id="controls">
+    <span class="key">W A S D</span> Move<br>
+    <span class="key">Mouse</span> Look<br>
+    <span class="key">Space</span> Jump<br>
+    <span class="key">Shift</span> Run<br>
+    <span class="key">E</span> Interact
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const W=window.innerWidth, H=window.innerHeight;
+const renderer=new THREE.WebGLRenderer({canvas:document.getElementById('c'),antialias:true});
+renderer.setSize(W,H);
+renderer.shadowMap.enabled=true;
+renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+renderer.setClearColor(0x0d0b1a);
+
+const scene=new THREE.Scene();
+scene.fog=new THREE.Fog(0x0d0b1a,60,180);
+
+const camera=new THREE.PerspectiveCamera(65,W/H,0.1,500);
+camera.position.set(0,8,18);
+camera.lookAt(0,2,0);
+
+const ambient=new THREE.AmbientLight(0x1a0d3a,0.8);
+scene.add(ambient);
+const sun=new THREE.DirectionalLight(0xc084fc,1.4);
+sun.position.set(20,40,20);
+sun.castShadow=true;
+sun.shadow.mapSize.width=2048;sun.shadow.mapSize.height=2048;
+sun.shadow.camera.near=0.5;sun.shadow.camera.far=200;
+sun.shadow.camera.left=-50;sun.shadow.camera.right=50;
+sun.shadow.camera.top=50;sun.shadow.camera.bottom=-50;
+scene.add(sun);
+const fill=new THREE.PointLight(0x7c3aed,1.5,60);
+fill.position.set(-10,10,0);scene.add(fill);
+const fill2=new THREE.PointLight(0xa855f7,1.2,40);
+fill2.position.set(10,5,10);scene.add(fill2);
+const torchLight=new THREE.PointLight(0xff9944,2.5,15);
+torchLight.position.set(0,4,0);scene.add(torchLight);
+
+const skyGeo=new THREE.SphereGeometry(200,32,32);
+const skyMat=new THREE.ShaderMaterial({
+  uniforms:{top:{value:new THREE.Color(0x050310)},bot:{value:new THREE.Color(0x1a0550)}},
+  vertexShader:`varying vec3 vPos;void main(){vPos=position;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
+  fragmentShader:`uniform vec3 top,bot;varying vec3 vPos;void main(){float t=clamp((vPos.y+200.)/400.,0.,1.);gl_FragColor=vec4(mix(bot,top,t),1.);}`,
+  side:THREE.BackSide
+});
+scene.add(new THREE.Mesh(skyGeo,skyMat));
+
+const starGeo=new THREE.BufferGeometry();
+const starPos=[];
+for(let i=0;i<400;i++){starPos.push((Math.random()-0.5)*400,(Math.random()*80+20),(Math.random()-0.5)*400);}
+starGeo.setAttribute('position',new THREE.Float32BufferAttribute(starPos,3));
+scene.add(new THREE.Points(starGeo,new THREE.PointsMaterial({color:0xffffff,size:0.3,sizeAttenuation:true})));
+
+const ground=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.MeshLambertMaterial({color:0x1a0d3a}));
+ground.rotation.x=-Math.PI/2;ground.receiveShadow=true;scene.add(ground);
+scene.add(new THREE.GridHelper(200,40,0x4a1a9e,0x2d0e6b));
+
+function box(w,h,d,x,y,z,col){
+  const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),new THREE.MeshLambertMaterial({color:col}));
+  m.position.set(x,y,z);m.castShadow=true;m.receiveShadow=true;scene.add(m);return m;
+}
+
+box(10,8,10,0,4,0,0x3b0d82);
+box(10.6,0.5,10.6,0,8.25,0,0x4a1a9e);
+[[-6,0,-6],[6,0,-6],[-6,0,6],[6,0,6]].forEach(([tx,ty,tz])=>{
+  box(3,10,3,tx,5,tz,0x2d0e6b);
+  box(3.4,0.6,3.4,tx,10.3,tz,0x4a1a9e);
+  for(let b=0;b<4;b++){const a=b*Math.PI/2;box(0.8,0.8,0.8,tx+Math.cos(a)*1.2,11,tz+Math.sin(a)*1.2,0x5b21b6);}
+});
+box(10,4,0.5,0,2,-5.25,0x2d0e6b);
+box(10,4,0.5,0,2,5.25,0x2d0e6b);
+box(0.5,4,10,-5.25,2,0,0x2d0e6b);
+box(0.5,4,10,5.25,2,0,0x2d0e6b);
+box(2,3,0.6,0,1.5,-5.3,0x1a0550);
+box(0.4,3,0.6,-1.2,1.5,-5.3,0x3b0d82);
+box(0.4,3,0.6,1.2,1.5,-5.3,0x3b0d82);
+
+const winMat=new THREE.MeshBasicMaterial({color:0xf9a8d4});
+[[1.5,5,-5.02,0],[-1.5,5,-5.02,0],[5.02,5,1.5,Math.PI/2],[5.02,5,-1.5,Math.PI/2],[-5.02,5,1.5,Math.PI/2],[-5.02,5,-1.5,Math.PI/2]].forEach(([x,y,z,r])=>{
+  const m=new THREE.Mesh(new THREE.PlaneGeometry(0.8,1.2),winMat);m.position.set(x,y,z);m.rotation.y=r;scene.add(m);
+});
+
+function torch(x,z){
+  const g=new THREE.Mesh(new THREE.SphereGeometry(0.25,8,8),new THREE.MeshBasicMaterial({color:0xff6600}));
+  g.position.set(x,4.5,z);scene.add(g);
+  const pl=new THREE.PointLight(0xff9944,1.5,8);pl.position.set(x,4.5,z);scene.add(pl);
+  return g;
+}
+const torches=[torch(-2,-5.3),torch(2,-5.3),torch(-5.3,-2),torch(-5.3,2)];
+
+function tree(x,z,h){
+  h=h||4;
+  box(0.4,h,0.4,x,h/2,z,0x4a2406);
+  const c=new THREE.Mesh(new THREE.ConeGeometry(2,4,7),new THREE.MeshLambertMaterial({color:0x1a3a0d}));
+  c.position.set(x,h+2,z);c.castShadow=true;scene.add(c);
+  const c2=new THREE.Mesh(new THREE.ConeGeometry(1.5,3,7),new THREE.MeshLambertMaterial({color:0x25520f}));
+  c2.position.set(x,h+4,z);scene.add(c2);
+}
+[[-15,0],[-18,5],[-16,-8],[-20,-3],[18,3],[16,-6],[20,0],[17,8],[-12,15],[14,15]].forEach(([x,z])=>tree(x,z,3+Math.random()*2));
+
+// Path stones
+for(let i=-6;i<=6;i+=2){
+  const s=new THREE.Mesh(new THREE.CylinderGeometry(0.4,0.45,0.1,8),new THREE.MeshLambertMaterial({color:0x2d0e6b}));
+  s.position.set(i*0.2,0.05,i+0.5);scene.add(s);
+}
+
+// CAT PLAYER
+const catGroup=new THREE.Group();scene.add(catGroup);
+const body=new THREE.Mesh(new THREE.BoxGeometry(1.2,1.4,0.9),new THREE.MeshLambertMaterial({color:0x7c3aed}));
+body.position.y=1.4;body.castShadow=true;catGroup.add(body);
+const head=new THREE.Mesh(new THREE.BoxGeometry(1.1,1.1,1),new THREE.MeshLambertMaterial({color:0x7c3aed}));
+head.position.y=2.5;head.castShadow=true;catGroup.add(head);
+[-1,1].forEach(s=>{
+  const e=new THREE.Mesh(new THREE.ConeGeometry(0.22,0.5,4),new THREE.MeshLambertMaterial({color:0x9333ea}));
+  e.position.set(s*0.32,3.12,0);catGroup.add(e);
+});
+const eyeM=new THREE.MeshBasicMaterial({color:0x10b981});
+[-0.25,0.25].forEach(ex=>{
+  const eye=new THREE.Mesh(new THREE.CircleGeometry(0.12,8),eyeM);
+  eye.position.set(ex,2.55,-0.51);catGroup.add(eye);
+});
+const nose=new THREE.Mesh(new THREE.CircleGeometry(0.07,6),new THREE.MeshBasicMaterial({color:0xf9a8d4}));
+nose.position.set(0,2.38,-0.51);catGroup.add(nose);
+const legs=[];
+[[-0.35,0.35,0.2],[0.35,0.35,0.2],[-0.35,0.35,-0.2],[0.35,0.35,-0.2]].forEach(([x,y,z])=>{
+  const l=new THREE.Mesh(new THREE.BoxGeometry(0.35,0.7,0.35),new THREE.MeshLambertMaterial({color:0x6d28d9}));
+  l.position.set(x,y,z);l.castShadow=true;catGroup.add(l);legs.push(l);
+});
+const tail=new THREE.Mesh(new THREE.TorusGeometry(0.6,0.08,8,16,Math.PI),new THREE.MeshLambertMaterial({color:0xa855f7}));
+tail.position.set(0,0.8,-0.7);tail.rotation.x=Math.PI/2;catGroup.add(tail);
+const armor=new THREE.Mesh(new THREE.BoxGeometry(1.25,0.9,0.2),new THREE.MeshLambertMaterial({color:0xfbbf24}));
+armor.position.set(0,1.5,-0.46);catGroup.add(armor);
+const swordGroup=new THREE.Group();
+const blade=new THREE.Mesh(new THREE.BoxGeometry(0.1,1.4,0.05),new THREE.MeshLambertMaterial({color:0xe5e7eb}));
+blade.position.y=0.7;swordGroup.add(blade);
+const guard=new THREE.Mesh(new THREE.BoxGeometry(0.5,0.1,0.08),new THREE.MeshLambertMaterial({color:0xfbbf24}));
+swordGroup.add(guard);
+const hilt=new THREE.Mesh(new THREE.BoxGeometry(0.1,0.5,0.07),new THREE.MeshLambertMaterial({color:0x78350f}));
+hilt.position.y=-0.25;swordGroup.add(hilt);
+swordGroup.position.set(0.9,1.8,-0.3);swordGroup.rotation.z=-0.3;
+catGroup.add(swordGroup);
+catGroup.position.set(0,0,6);
+
+// NPCs
+function npcCat(x,z,col){
+  const g=new THREE.Group();
+  const b=new THREE.Mesh(new THREE.BoxGeometry(1,1.2,0.8),new THREE.MeshLambertMaterial({color:col}));
+  b.position.y=1.2;g.add(b);
+  const h=new THREE.Mesh(new THREE.BoxGeometry(0.9,0.9,0.85),new THREE.MeshLambertMaterial({color:col}));
+  h.position.y=2.15;g.add(h);
+  [-1,1].forEach(s=>{const e=new THREE.Mesh(new THREE.ConeGeometry(0.18,0.4,4),new THREE.MeshLambertMaterial({color:col}));e.position.set(s*0.27,2.65,0);g.add(e);});
+  [-0.2,0.2].forEach(ex=>{const eye=new THREE.Mesh(new THREE.CircleGeometry(0.1,8),new THREE.MeshBasicMaterial({color:0xfbbf24}));eye.position.set(ex,2.2,-0.43);g.add(eye);});
+  [[-0.2,0.3,0.18],[0.2,0.3,0.18],[-0.2,0.3,-0.18],[0.2,0.3,-0.18]].forEach(([px,py,pz])=>{
+    const l=new THREE.Mesh(new THREE.BoxGeometry(0.28,0.6,0.28),new THREE.MeshLambertMaterial({color:col}));
+    l.position.set(px,py,pz);g.add(l);
+  });
+  g.position.set(x,0,z);scene.add(g);return g;
+}
+const npcs=[npcCat(-4,3,0xe11d48),npcCat(4,4,0x0891b2),npcCat(-3,-2,0x16a34a),npcCat(5,-3,0xf59e0b)];
+
+// Particles
+const partGeo=new THREE.BufferGeometry();
+const partPos=[];
+for(let i=0;i<200;i++){partPos.push((Math.random()-0.5)*80,(Math.random()*20+0.5),(Math.random()-0.5)*80);}
+partGeo.setAttribute('position',new THREE.Float32BufferAttribute(partPos,3));
+scene.add(new THREE.Points(partGeo,new THREE.PointsMaterial({color:0xc084fc,size:0.12,sizeAttenuation:true,transparent:true,opacity:0.6})));
+
+// Crystals
+const crystals=[];
+[[- 8,1,-4,0xf472b6],[9,1,2,0x60a5fa],[-3,1,8,0x4ade80],[7,1,-7,0xfbbf24],[-10,1,6,0xe879f9]].forEach(([x,y,z,col])=>{
+  const m=new THREE.Mesh(new THREE.OctahedronGeometry(0.3),new THREE.MeshLambertMaterial({color:col,emissive:col,emissiveIntensity:0.3}));
+  m.position.set(x,y,z);scene.add(m);crystals.push(m);
+});
+
+// Camera controls
+let camTheta=0,camPhi=0.5,camDist=18;
+let isDragging=false,lastMX=0,lastMY=0;
+let camTargetSmooth=new THREE.Vector3(0,3,0);
+
+document.getElementById('c').addEventListener('mousedown',e=>{isDragging=true;lastMX=e.clientX;lastMY=e.clientY;});
+document.addEventListener('mouseup',()=>isDragging=false);
+document.addEventListener('mousemove',e=>{
+  if(!isDragging)return;
+  camTheta-=(e.clientX-lastMX)*0.005;
+  camPhi=Math.max(0.15,Math.min(1.2,camPhi+(e.clientY-lastMY)*0.004));
+  lastMX=e.clientX;lastMY=e.clientY;
+});
+document.getElementById('c').addEventListener('wheel',e=>{camDist=Math.max(6,Math.min(50,camDist+e.deltaY*0.04));});
+
+const keys={};
+document.addEventListener('keydown',e=>{
+  keys[e.code]=true;
+  if(e.code==='Space')doJump();
+  if(e.code==='Enter')document.getElementById('chatField').focus();
+});
+document.addEventListener('keyup',e=>keys[e.code]=false);
+
+let playerVY=0,isOnGround=true,isRunning=false,walkPhase=0;
+function doJump(){if(isOnGround){playerVY=0.22;isOnGround=false;showNotif('🦘 Jumped!');}}
+
+let t=0;
+
+// Minimap
+const mmCanvas=document.getElementById('mmCanvas');
+const mmCtx=mmCanvas.getContext('2d');
+function drawMinimap(){
+  const s=140;
+  mmCtx.fillStyle='rgba(13,11,26,0.95)';mmCtx.fillRect(0,0,s,s);
+  mmCtx.strokeStyle='rgba(124,58,237,0.3)';mmCtx.lineWidth=1;
+  for(let g=-4;g<=4;g++){
+    mmCtx.beginPath();mmCtx.moveTo(s/2+g*14,0);mmCtx.lineTo(s/2+g*14,s);mmCtx.stroke();
+    mmCtx.beginPath();mmCtx.moveTo(0,s/2+g*14);mmCtx.lineTo(s,s/2+g*14);mmCtx.stroke();
+  }
+  mmCtx.fillStyle='rgba(90,21,233,0.6)';
+  mmCtx.fillRect(s/2-10,s/2-10,20,20);
+  const npcCols=['#f472b6','#60a5fa','#4ade80','#fbbf24'];
+  npcs.forEach((n,i)=>{
+    mmCtx.fillStyle=npcCols[i];
+    mmCtx.beginPath();
+    mmCtx.arc(s/2+n.position.x*(-2),s/2+n.position.z*(-2),3,0,Math.PI*2);
+    mmCtx.fill();
+  });
+  mmCtx.fillStyle='#c084fc';
+  mmCtx.beginPath();mmCtx.arc(s/2,s/2,5,0,Math.PI*2);mmCtx.fill();
+  mmCtx.strokeStyle='white';mmCtx.lineWidth=1.5;mmCtx.stroke();
+  mmCtx.fillStyle='rgba(192,132,252,0.8)';mmCtx.font='bold 10px Nunito';mmCtx.textAlign='center';
+  mmCtx.fillText('N',s/2,10);
+}
+
+// Chat
+const chatMessages=[
+  {cn:'PinkMeow',cc:'p',msg:'anyone know where the boss is?'},
+  {cn:'CoolTuna',cc:'b',msg:'check the north tower!'},
+  {cn:'SunKitty',cc:'y',msg:'i found the chest!! 🎉'},
+  {cn:'GreenPurr',cc:'g',msg:'need heals pls'},
+  {cn:'System',cc:'o',msg:'💜 New event: Crystal Hunt active!'},
+  {cn:'PinkMeow',cc:'p',msg:'omg the crystals are so pretty'},
+  {cn:'CoolTuna',cc:'b',msg:'lf2m for dungeon'},
+  {cn:'GreenPurr',cc:'g',msg:'joining!'},
+  {cn:'System',cc:'o',msg:'🏆 WhiskerKnight reached Level 42!'},
+  {cn:'SunKitty',cc:'y',msg:'congrats!! 🐾'},
+];
+let chatIdx=0;
+function addChatMsg(){
+  const log=document.getElementById('chatlog');
+  const m=chatMessages[chatIdx%chatMessages.length];chatIdx++;
+  const div=document.createElement('div');div.className='cmsg';
+  div.innerHTML=`<span class="cn ${m.cc}">${m.cn}:</span><span style="color:#c4b5fd"> ${m.msg}</span>`;
+  log.appendChild(div);
+  if(log.children.length>12)log.removeChild(log.children[0]);
+  log.scrollTop=log.scrollHeight;
+}
+setInterval(addChatMsg,2800);
+for(let i=0;i<3;i++)setTimeout(addChatMsg,i*300);
+
+const nearbyNames=[['PinkMeow','p','24m'],['CoolTuna','b','38m'],['GreenPurr','g','51m'],['SunKitty','y','67m']];
+const nl=document.getElementById('nearbyList');
+nearbyNames.forEach(([n,c,d])=>{
+  const div=document.createElement('div');div.className='mini-item';
+  div.innerHTML=`<span class="ml" style="color:${c==='p'?'#f472b6':c==='b'?'#60a5fa':c==='g'?'#4ade80':'#facc15'}">${n}</span><span class="mr">${d}</span>`;
+  nl.appendChild(div);
+});
+
+let notifTimer=null;
+function showNotif(msg){
+  const n=document.getElementById('notif');n.textContent=msg;n.classList.add('show');
+  clearTimeout(notifTimer);notifTimer=setTimeout(()=>n.classList.remove('show'),2500);
+}
+setTimeout(()=>showNotif('🐱 PurrMaster joined the world!'),1200);
+setTimeout(()=>showNotif('💎 Crystal shard nearby!'),5000);
+setTimeout(()=>showNotif('⚔️ Boss spawned at the north tower!'),10000);
+
+document.getElementById('btn-jump').addEventListener('click',doJump);
+['btn-walk','btn-run','btn-jump','btn-emote','btn-inv','btn-map'].forEach(id=>{
+  document.getElementById(id).addEventListener('click',function(){
+    if(id==='btn-walk'||id==='btn-run'){
+      document.getElementById('btn-walk').classList.toggle('active',id==='btn-walk');
+      document.getElementById('btn-run').classList.toggle('active',id==='btn-run');
+      isRunning=id==='btn-run';
+    }
+    const msgs={'btn-emote':'😸 Playing emote!','btn-inv':'🎒 Inventory opened!','btn-map':'🗺️ Map opened!'};
+    if(msgs[id])showNotif(msgs[id]);
+  });
+});
+document.getElementById('invBtn').addEventListener('click',()=>showNotif('👥 Invite link copied!'));
+document.getElementById('menuBtn').addEventListener('click',()=>showNotif('☰ Menu coming soon!'));
+document.getElementById('avBtn').addEventListener('click',()=>showNotif('😸 Avatar editor opening!'));
+
+function sendChat(){
+  const f=document.getElementById('chatField');const v=f.value.trim();if(!v)return;
+  const log=document.getElementById('chatlog');
+  const div=document.createElement('div');div.className='cmsg';
+  div.innerHTML=`<span class="cn y">You:</span><span style="color:#e0d4ff"> ${v}</span>`;
+  log.appendChild(div);if(log.children.length>12)log.removeChild(log.children[0]);
+  log.scrollTop=log.scrollHeight;f.value='';
+}
+document.getElementById('sendBtn').addEventListener('click',sendChat);
+document.getElementById('chatField').addEventListener('keydown',e=>{if(e.code==='Enter')sendChat();});
+
+let en=93;
+setInterval(()=>{
+  en=Math.max(10,Math.min(100,en+(isRunning?-0.5:0.3)));
+  document.getElementById('enBar').style.width=en+'%';
+  document.getElementById('enVal').textContent=Math.round(en);
+},200);
+
+function animate(){
+  requestAnimationFrame(animate);
+  t+=0.016;
+  const speed=isRunning?0.15:0.08;
+  const fwd=new THREE.Vector3(Math.sin(camTheta),0,Math.cos(camTheta));
+  const right=new THREE.Vector3(Math.cos(camTheta),0,-Math.sin(camTheta));
+  let moved=false;
+  if(keys['KeyW']){catGroup.position.addScaledVector(fwd,-speed);moved=true;}
+  if(keys['KeyS']){catGroup.position.addScaledVector(fwd,speed);moved=true;}
+  if(keys['KeyA']){catGroup.position.addScaledVector(right,-speed);moved=true;}
+  if(keys['KeyD']){catGroup.position.addScaledVector(right,speed);moved=true;}
+  if(moved)catGroup.rotation.y=camTheta;
+
+  playerVY-=0.012;
+  catGroup.position.y+=playerVY;
+  if(catGroup.position.y<=0){catGroup.position.y=0;playerVY=0;isOnGround=true;}
+
+  if(moved){
+    walkPhase+=0.2*(isRunning?1.8:1);
+    legs[0].rotation.x=Math.sin(walkPhase)*0.7;
+    legs[1].rotation.x=-Math.sin(walkPhase)*0.7;
+    legs[2].rotation.x=-Math.sin(walkPhase)*0.7;
+    legs[3].rotation.x=Math.sin(walkPhase)*0.7;
+    swordGroup.rotation.z=-0.3+Math.sin(walkPhase*0.5)*0.15;
+  }
+  tail.rotation.z=Math.sin(t*2)*0.4;
+
+  npcs.forEach((n,i)=>{const a=t*0.4+i*1.5;n.position.x+=Math.sin(a)*0.015;n.position.z+=Math.cos(a*0.7)*0.015;n.rotation.y=a;});
+  crystals.forEach((c,i)=>{c.rotation.y+=0.03;c.position.y=1+Math.sin(t*1.5+i)*0.2;});
+  torches.forEach((t2,i)=>{t2.scale.setScalar(0.9+Math.sin(t*10+i)*0.15);});
+  torchLight.intensity=2+Math.sin(t*7)*0.5;
+  torchLight.position.set(Math.sin(t*0.5)*2,4,0);
+
+  camTargetSmooth.lerp(catGroup.position,0.08);
+  camTargetSmooth.y=3;
+  const cx=camTargetSmooth.x+Math.sin(camTheta)*Math.sin(camPhi)*camDist;
+  const cy=camTargetSmooth.y+Math.cos(camPhi)*camDist;
+  const cz=camTargetSmooth.z+Math.cos(camTheta)*Math.sin(camPhi)*camDist;
+  camera.position.lerp(new THREE.Vector3(cx,cy,cz),0.1);
+  camera.lookAt(camTargetSmooth);
+
+  drawMinimap();
+  renderer.render(scene,camera);
+}
+animate();
+
+window.addEventListener('resize',()=>{
+  renderer.setSize(window.innerWidth,window.innerHeight);
+  camera.aspect=window.innerWidth/window.innerHeight;
+  camera.updateProjectionMatrix();
+});
+</script>
+</body>
+</html>
