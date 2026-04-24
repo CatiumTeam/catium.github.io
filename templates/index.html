@@ -3,216 +3,269 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Catium</title>
+  <title>Catium - Play Together</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 </head>
 <body>
 
-  <!-- TOP BAR -->
-  <div id="top-bar">
-    <span>Welcome to Catium! &nbsp;|&nbsp; <a href="#">Sign Up</a> &nbsp;|&nbsp; <a href="#">Log In</a></span>
-  </div>
-
-  <!-- HEADER -->
-  <header id="main-header">
-    <div id="header-inner">
-      <a href="#" id="logo">
-        <img src="https://i.imgur.com/Qj9QVqF.png" alt="Catium" onerror="this.style.display='none'; document.getElementById('logo-text').style.display='block';" />
-        <span id="logo-text">Catium</span>
-      </a>
-      <nav id="main-nav">
-        <a href="#" class="nav-link active">Games</a>
-        <a href="#" class="nav-link">Catalog</a>
-        <a href="#" class="nav-link">Trade</a>
-        <a href="#" class="nav-link">Forums</a>
-        <a href="#" class="nav-link">Blog</a>
-        <a href="#" class="nav-link">More &darr;</a>
-      </nav>
-      <div id="header-right">
-        <div id="search-bar">
-          <input type="text" placeholder="Search" />
-          <button>&#128269;</button>
-        </div>
-        <div id="user-info">
-          <img src="https://www.roblox.com/headshot-thumbnail/image?userId=1&width=48&height=48&format=png" alt="Avatar" id="avatar-img" onerror="this.src='avatar_placeholder.png'" />
-          <span id="username">Builderman</span>
-          <span id="robux">&#x1F4B0; 0 CAT</span>
-          <span id="tickets">&#127914; 0 TIX</span>
+  <!-- NAV -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <a href="#" id="logo">
+          <span class="logo-icon">&#9670;</span>
+          <span class="logo-text">catium</span>
+        </a>
+        <div id="main-nav">
+          <a href="#" class="nav-link active" data-section="popular-games">Discover</a>
+          <a href="#" class="nav-link" data-section="top-rated">Top Rated</a>
+          <a href="#" class="nav-link">Catalog</a>
+          <a href="#" class="nav-link">Community</a>
+          <a href="#" class="nav-link">Create</a>
         </div>
       </div>
-    </div>
-  </header>
-
-  <!-- SIDE NAV + CONTENT -->
-  <div id="page-wrapper">
-
-    <!-- LEFT SIDEBAR -->
-    <aside id="sidebar">
-      <div class="sidebar-section">
-        <div class="sidebar-header">My Stuff</div>
-        <ul>
-          <li><a href="#">Profile</a></li>
-          <li><a href="#">Avatar</a></li>
-          <li><a href="#">Friends</a></li>
-          <li><a href="#">Messages <span class="badge">3</span></a></li>
-          <li><a href="#">My Places</a></li>
-          <li><a href="#">My Models</a></li>
-          <li><a href="#">My Decals</a></li>
-          <li><a href="#">My Gear</a></li>
-          <li><a href="#">My Hats</a></li>
-        </ul>
-      </div>
-      <div class="sidebar-section">
-        <div class="sidebar-header">Money</div>
-        <ul>
-          <li><a href="#">Buy Robux</a></li>
-          <li><a href="#">Buy Tickets</a></li>
-          <li><a href="#">Trade Currency</a></li>
-          <li><a href="#">My Transactions</a></li>
-        </ul>
-      </div>
-      <div class="sidebar-section">
-        <div class="sidebar-header">Official</div>
-        <ul>
-          <li><a href="#">Blog</a></li>
-          <li><a href="#">Forums</a></li>
-          <li><a href="#">Catium Wiki</a></li>
-        </ul>
-      </div>
-    </aside>
-
-    <!-- MAIN CONTENT -->
-    <main id="main-content">
-
-      <!-- FEATURED BANNER -->
-      <div id="featured-banner">
-        <div id="featured-image">
-          <div id="featured-overlay">
-            <div id="featured-title">Featured: Sword Fighting Tournament</div>
-            <div id="featured-sub">by Catium &nbsp;|&nbsp; &#9733;&#9733;&#9733;&#9733;&#9733; &nbsp;|&nbsp; 1,204,532 plays</div>
-            <button class="play-btn">Play</button>
+      <div class="nav-right">
+        <div id="search-wrap">
+          <span class="search-icon">&#128269;</span>
+          <input type="text" id="search-input" placeholder="Search games, creators..." autocomplete="off" />
+          <div id="search-results" class="hidden"></div>
+        </div>
+        <button class="btn-ghost" onclick="openModal()">Log in</button>
+        <button class="btn-primary" onclick="openModal()">Sign up</button>
+        <div id="user-avatar-wrap" class="hidden">
+          <img id="avatar-img" src="" alt="Avatar" />
+          <div id="user-dropdown" class="hidden">
+            <span id="dropdown-username"></span>
+            <a href="#">Profile</a>
+            <a href="#">Inventory</a>
+            <a href="#">Settings</a>
+            <a href="#" id="logout-btn">Log out</a>
           </div>
         </div>
-        <div id="featured-tabs">
-          <button class="ftab active" onclick="switchFeatured(0)">1</button>
-          <button class="ftab" onclick="switchFeatured(1)">2</button>
-          <button class="ftab" onclick="switchFeatured(2)">3</button>
-          <button class="ftab" onclick="switchFeatured(3)">4</button>
-          <button class="ftab" onclick="switchFeatured(4)">5</button>
-        </div>
-      </div>
-
-      <!-- POPULAR GAMES -->
-      <section class="content-section">
-        <div class="section-header">
-          <h2>Popular Games</h2>
-          <a href="#" class="see-all">See All &raquo;</a>
-        </div>
-        <div class="game-grid" id="popular-games"></div>
-      </section>
-
-      <!-- TOP RATED -->
-      <section class="content-section">
-        <div class="section-header">
-          <h2>Top Rated</h2>
-          <a href="#" class="see-all">See All &raquo;</a>
-        </div>
-        <div class="game-grid" id="top-rated"></div>
-      </section>
-
-      <!-- NEW & UPDATED -->
-      <section class="content-section">
-        <div class="section-header">
-          <h2>New &amp; Updated</h2>
-          <a href="#" class="see-all">See All &raquo;</a>
-        </div>
-        <div class="game-grid" id="new-games"></div>
-      </section>
-
-    </main>
-
-    <!-- RIGHT SIDEBAR -->
-    <aside id="right-sidebar">
-      <div class="sidebar-section">
-        <div class="sidebar-header">Catium Club</div>
-        <div id="bc-promo">
-          <div class="bc-tier bc-classic">Classic CC</div>
-          <div class="bc-tier bc-turbo">Turbo CC</div>
-          <div class="bc-tier bc-outrageous">Elite CC</div>
-          <button class="upgrade-btn">Upgrade Now!</button>
-        </div>
-      </div>
-      <div class="sidebar-section">
-        <div class="sidebar-header">Active Friends</div>
-        <ul id="friends-list">
-          <li><span class="friend-dot online"></span> <a href="#">Builderman</a></li>
-          <li><span class="friend-dot online"></span> <a href="#">Stickmasterluke</a></li>
-          <li><span class="friend-dot online"></span> <a href="#">Merely</a></li>
-          <li><span class="friend-dot offline"></span> <a href="#">1x1x1x1</a></li>
-          <li><span class="friend-dot offline"></span> <a href="#">Telamon</a></li>
-        </ul>
-      </div>
-      <div class="sidebar-section">
-        <div class="sidebar-header">Latest Blog Post</div>
-        <div class="blog-post">
-          <a href="#">Catium Summer Tournament 2026 - Win Prizes!</a>
-          <p>Posted on April 20, 2026 by Catium</p>
-        </div>
-      </div>
-    </aside>
-
-  </div>
-
-  <!-- FOOTER -->
-  <footer id="main-footer">
-    <div id="footer-inner">
-      <div class="footer-col">
-        <strong>Catium</strong>
-        <a href="#">About Us</a>
-        <a href="#">Careers</a>
-        <a href="#">Press</a>
-        <a href="#">Blog</a>
-      </div>
-      <div class="footer-col">
-        <strong>Community</strong>
-        <a href="#">Forums</a>
-        <a href="#">Wiki</a>
-        <a href="#">Fan Sites</a>
-        <a href="#">Merchandise</a>
-      </div>
-      <div class="footer-col">
-        <strong>Help</strong>
-        <a href="#">FAQ</a>
-        <a href="#">Contact Us</a>
-        <a href="#">Parents Guide</a>
-        <a href="#">Safety</a>
-      </div>
-      <div class="footer-col">
-        <strong>Legal</strong>
-        <a href="#">Terms of Service</a>
-        <a href="#">Privacy Policy</a>
-        <a href="#">Cookie Policy</a>
       </div>
     </div>
-    <div id="footer-bottom">&copy; 2026 Catium. All Rights Reserved.</div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg" id="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-badge">&#128293; Featured</div>
+      <h1 id="hero-title">Sword Fighting Tournament</h1>
+      <p id="hero-meta">by <strong>Catium</strong> &nbsp;&middot;&nbsp; <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 4.9 &nbsp;&middot;&nbsp; 1.2B plays</p>
+      <div class="hero-actions">
+        <button class="btn-play" onclick="gameClick(null, 'Sword Fighting Tournament')">
+          <span>&#9654;</span> Play Now
+        </button>
+        <button class="btn-ghost-lg">+ Wishlist</button>
+      </div>
+      <div class="hero-dots" id="hero-dots"></div>
+    </div>
+  </section>
+
+  <!-- MAIN -->
+  <main id="main">
+
+    <!-- QUICK STATS BAR -->
+    <div class="stats-bar">
+      <div class="stat-item">
+        <span class="stat-num" id="stat-online">142,391</span>
+        <span class="stat-label">Players Online</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num">48,200+</span>
+        <span class="stat-label">Games</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num">3.2B+</span>
+        <span class="stat-label">All-time Plays</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num">12M+</span>
+        <span class="stat-label">Creators</span>
+      </div>
+    </div>
+
+    <!-- CATEGORY PILLS -->
+    <div class="section-row">
+      <div class="section-title-row">
+        <h2>Discover</h2>
+      </div>
+      <div class="category-pills">
+        <button class="pill active">All</button>
+        <button class="pill">Action</button>
+        <button class="pill">Roleplay</button>
+        <button class="pill">Tycoon</button>
+        <button class="pill">Obby</button>
+        <button class="pill">Horror</button>
+        <button class="pill">Simulator</button>
+        <button class="pill">Fighting</button>
+        <button class="pill">Racing</button>
+      </div>
+    </div>
+
+    <!-- POPULAR -->
+    <section class="game-section">
+      <div class="section-title-row">
+        <h2>&#128293; Popular Right Now</h2>
+        <a href="#" class="see-all">See all</a>
+      </div>
+      <div class="game-row" id="popular-games"></div>
+    </section>
+
+    <!-- TOP RATED -->
+    <section class="game-section">
+      <div class="section-title-row">
+        <h2>&#9733; Top Rated</h2>
+        <a href="#" class="see-all">See all</a>
+      </div>
+      <div class="game-row" id="top-rated"></div>
+    </section>
+
+    <!-- NEW -->
+    <section class="game-section">
+      <div class="section-title-row">
+        <h2>&#10024; New &amp; Rising</h2>
+        <a href="#" class="see-all">See all</a>
+      </div>
+      <div class="game-row" id="new-games"></div>
+    </section>
+
+    <!-- PREMIUM PROMO -->
+    <section id="premium-section">
+      <div class="premium-inner">
+        <div class="premium-text">
+          <div class="premium-badge">Catium Premium</div>
+          <h2>Unlock the full experience</h2>
+          <p>Get exclusive avatar items, monthly CAT allowance, and access to premium-only games.</p>
+          <div class="premium-tiers">
+            <div class="ptier">
+              <div class="ptier-name">Starter</div>
+              <div class="ptier-price">450 <span>CAT/mo</span></div>
+            </div>
+            <div class="ptier highlight">
+              <div class="ptier-name">Pro</div>
+              <div class="ptier-price">1,000 <span>CAT/mo</span></div>
+            </div>
+            <div class="ptier">
+              <div class="ptier-name">Elite</div>
+              <div class="ptier-price">2,200 <span>CAT/mo</span></div>
+            </div>
+          </div>
+          <button class="btn-primary btn-lg" onclick="openModal()">Get Premium</button>
+        </div>
+        <div class="premium-graphic">
+          <div class="pg-diamond">&#9670;</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer id="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="#" class="footer-logo">
+          <span class="logo-icon">&#9670;</span>
+          <span class="logo-text">catium</span>
+        </a>
+        <p>The platform where imagination becomes reality. Build, play, and connect.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <strong>Company</strong>
+          <a href="#">About</a>
+          <a href="#">Careers</a>
+          <a href="#">Press</a>
+          <a href="#">Blog</a>
+        </div>
+        <div class="footer-col">
+          <strong>Community</strong>
+          <a href="#">Forums</a>
+          <a href="#">Wiki</a>
+          <a href="#">Discord</a>
+          <a href="#">Merch</a>
+        </div>
+        <div class="footer-col">
+          <strong>Support</strong>
+          <a href="#">Help Center</a>
+          <a href="#">Safety</a>
+          <a href="#">Contact</a>
+          <a href="#">Parents</a>
+        </div>
+        <div class="footer-col">
+          <strong>Legal</strong>
+          <a href="#">Terms</a>
+          <a href="#">Privacy</a>
+          <a href="#">Cookies</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Catium, Inc. All rights reserved.</span>
+      <div class="footer-socials">
+        <a href="#">Twitter</a>
+        <a href="#">YouTube</a>
+        <a href="#">TikTok</a>
+        <a href="#">Instagram</a>
+      </div>
+    </div>
   </footer>
 
-  <!-- MODAL: Login -->
-  <div id="modal-overlay" class="hidden">
-    <div id="login-modal">
-      <div id="modal-header">
-        <span>Log In to Catium</span>
-        <button id="modal-close" onclick="closeModal()">&times;</button>
+  <!-- LOGIN MODAL -->
+  <div id="modal-overlay" class="hidden" onclick="overlayClick(event)">
+    <div id="modal">
+      <button id="modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
+      <div class="modal-logo">
+        <span class="logo-icon">&#9670;</span>
+        <span class="logo-text">catium</span>
       </div>
-      <div id="modal-body">
-        <label>Username</label>
-        <input type="text" placeholder="Username" />
+      <div class="modal-tabs">
+        <button class="mtab active" id="tab-login" onclick="switchTab('login')">Log In</button>
+        <button class="mtab" id="tab-signup" onclick="switchTab('signup')">Sign Up</button>
+      </div>
+      <div id="modal-login">
+        <label>Username or Email</label>
+        <input type="text" id="login-user" placeholder="Enter username..." />
         <label>Password</label>
-        <input type="password" placeholder="Password" />
-        <label><input type="checkbox" /> Remember me</label>
-        <button class="login-submit-btn">Log In</button>
-        <div class="modal-links">
-          <a href="#">Forgot Password?</a> &nbsp;|&nbsp; <a href="#">Sign Up</a>
+        <input type="password" id="login-pass" placeholder="Enter password..." />
+        <label class="checkbox-row"><input type="checkbox" /> Keep me logged in</label>
+        <button class="btn-primary btn-block" onclick="doLogin()">Log In</button>
+        <a href="#" class="modal-link">Forgot password?</a>
+      </div>
+      <div id="modal-signup" class="hidden">
+        <label>Username</label>
+        <input type="text" id="signup-user" placeholder="Choose a username..." />
+        <label>Email</label>
+        <input type="email" id="signup-email" placeholder="your@email.com" />
+        <label>Password</label>
+        <input type="password" id="signup-pass" placeholder="Create a password..." />
+        <button class="btn-primary btn-block" onclick="doSignup()">Create Account</button>
+        <p class="modal-fine">By signing up, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAME MODAL -->
+  <div id="game-modal-overlay" class="hidden" onclick="closeGameModal(event)">
+    <div id="game-modal">
+      <button class="gm-close" onclick="closeGameModal(null)">&times;</button>
+      <div id="gm-thumb"></div>
+      <div class="gm-body">
+        <h2 id="gm-title"></h2>
+        <p id="gm-meta"></p>
+        <p id="gm-desc"></p>
+        <div class="gm-actions">
+          <button class="btn-play" onclick="alert('Launching Catium Player... (demo)')">&#9654; Play</button>
+          <button class="btn-ghost-lg">+ Wishlist</button>
+          <button class="btn-ghost-lg">&#128100; Creator</button>
         </div>
       </div>
     </div>
@@ -221,3 +274,4 @@
   <script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
 </html>
+
